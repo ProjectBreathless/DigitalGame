@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Light The Way</title>
+	<link rel="stylesheet" href="css/main.css">
+	
+    <script type="text/javascript">
+              WebFontConfig = {
+                google: { families: [ 'Freckle+Face::latin' ] }
+              };
+              (function() {
+                var wf = document.createElement('script');
+                wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                wf.type = 'text/javascript';
+                wf.async = 'true';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(wf, s);
+              })();
+    </script>
+
+	<script src="js/phaser.min.js"></script>
+	<script src="js/Boot.js"></script>
+	<script src="js/Preloader.js"></script>
+	<script src="js/MainMenu.js"></script>
+	<script src="js/MainMenu2.js"></script>
+	<script src="js/MainMenu3.js"></script>
+	<script src="js/MainMenuX.js"></script>
+	<script src="js/Game.js"></script>
+	<script src="js/Winner.js"></script>
+	<script src="js/Loser.js"></script>
+</head>
+
+<body>
+    <div class="bg-texture">
+       <div class="tip_wrap">
+            <div id="content-1">
+               <img src="imgs/tips_mouse.png">
+                <p>Use your mouse to control the torch, click to move your character.</p>
+            </div>
+            <div id="content-2">
+               <img src="imgs/tips_coin.png">
+                <p>Collect coins found in the temple, and move on to new levels.</p>
+            </div>
+            <div id="content-3">
+               <img src="imgs/tips_snake.png">
+                <p>But watch out for snakes! Scare them off with your torch.</p>
+            </div>
+        </div>
+        <div id="phaser-canvas"></div>
+        <div class="credit">
+            <p>Background Illustration By <a href="https://www.flickr.com/photos/duncanbarrett/">Duncan Barrett</a></p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script>
+		window.onload = function() {
+			console.log('windows loaded');
+			var game = new Phaser.Game(720, 960, Phaser.AUTO, 'phaser-canvas');
+			game.state.add('Boot', gameObj.Boot);
+			game.state.add('Preloader', gameObj.Preloader);
+			game.state.add('MainMenu', gameObj.MainMenu);
+            game.state.add('MainMenu2', gameObj.MainMenu2);
+            game.state.add('MainMenu3', gameObj.MainMenu3);
+            game.state.add('MainMenuX', gameObj.MainMenuX);
+			game.state.add('Game', gameObj.Game);
+			game.state.add('Winner', gameObj.Winner);
+			game.state.add('Loser', gameObj.Loser);
+			game.state.start('Boot');
+            
+            // Looping footer fade
+            var divs = $('div[id^="content-"]').hide(),
+                i = 0;
+
+            (function cycle() { 
+
+                divs.eq(i).fadeIn(400)
+                          .delay(5000)
+                          .fadeOut(400, cycle);
+
+                i = ++i % divs.length;
+
+            })();
+		};
+	</script>
+</body>
+
+</html>
