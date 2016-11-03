@@ -12,6 +12,9 @@ gameObj.Preloader.prototype = {
 		//
 //		this.load.spritesheet('playButton', 'imgs/play_button.png', 180, 90);
 
+        this.load.tilemap('mario', 'levels/super_mario.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles', 'levels/super_mario.png');
+        
 		// Load ALL GAME images into memory
         
         //TEMPORARY

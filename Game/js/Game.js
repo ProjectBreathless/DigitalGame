@@ -14,6 +14,9 @@ gameObj.Game = function(game) {
     var cells;
     var snakes;
     var torch;
+    
+    var map;
+    var layer;
 };
 
 gameObj.Game.prototype = {
@@ -27,6 +30,21 @@ gameObj.Game.prototype = {
 		//Add list graphics
 		var background = this.add.sprite(0, 0, 'bg');
         
+        
+        map = this.add.tilemap('mario');
+
+        map.addTilesetImage('SuperMarioBros-World1-1', 'tiles');
+
+        layer = map.createLayer('World1');
+
+        layer.resizeWorld();
+
+        layer.wrap = true;
+
+        cursors = this.input.keyboard.createCursorKeys();
+        
+        
+        //  This resizes the game world to match the layer dimensions
         
         this.cell = this.add.tileSprite(-55, 0, 75, this.game.world.height,'wall');
 
