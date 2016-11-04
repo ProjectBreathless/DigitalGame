@@ -4,79 +4,7 @@ body{
     margin:0;
 }
 
-.bg-texture {
-    width:100vw; height:100vh;
-    background-image: url(../imgs/jungleText.png);
-    
-    display: flex;
-}
-
 #phaser-canvas{
     margin:0 auto;
-    max-width:720px;
 }
-
-.credit {
-    position: fixed;
-    bottom:0;
-    right:0;
-    height:50px;
-    float: right;
-    opacity:.1;
-    transition: opacity 200ms ease-in-out;
-}
-.credit:hover {
-    opacity:.8;
-}
-
-.credit p {
-    padding:0 50px;
-    color:#e2e2e2;
-    font-size: 1.2em;
-    font-family: sans-serif;
-}
-
-.credit a {
-    color:#fff;
-}
-
-.tip_wrap {
-    position: absolute;
-    display:block;
-    float:left;
-    margin:20vh 50px;
-    
-    max-width:350px;
-}
-
-.tip_wrap p {
-    font-family: 'Freckle Face';
-    font-size: 2em;
-    color:#fefefe;
-    text-align: center;
-}
-
-.tip_wrap img {
-    display: block;
-    margin: 0 auto;
-}
-
-.content-1, .content-2, .content-3 {
-    width:100%;
-    text-align: center;
-    margin: 0 auto;
-}
-
-@media screen and (max-width: 1500px) {
-    .tip_wrap, .credit {
-        display:none;
-    }
-    .bg-texture {
-        background-image: none;
-        background-color: #120B07;
-    }
-}
-
-
-
 
