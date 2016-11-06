@@ -8,6 +8,8 @@ gameObj.Game = function(game) {
 
     var map;
     var layer;
+    
+    var door;
 };
 
 gameObj.Game.prototype = {
@@ -43,6 +45,8 @@ gameObj.Game.prototype = {
         
         facing = 'left';
         jumpTimer = 0;
+        
+        door = this.add.sprite(1450, 370, 'door');
 
         player = this.add.sprite(100, 200, 'dude');
         player.animations.add('left', [0, 1, 2, 3], 10, true);
