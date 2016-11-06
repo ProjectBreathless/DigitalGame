@@ -7,7 +7,7 @@ gameObj.Preloader.prototype = {
         this.load.tilemap('map', 'levels/collision_test.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('ground_1x1', 'levels/ground_1x1.png');
         this.load.image('walls_1x2', 'levels/walls_1x2.png');
-        this.load.image('tiles2', 'levels/tilemaps/tiles/tiles2.png');
+        this.load.image('tiles2', 'levels/tiles2.png');
         this.load.spritesheet('dude', 'levels/dude.png', 32, 48);
         
         
