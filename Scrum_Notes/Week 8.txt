@@ -1,0 +1,21 @@
+Week 8
+
+What we have done
+	Git Repository
+	Basic Assets
+	Prototype
+	Brainstorming and clarification
+	Productivity: Trello and Slack
+	Tile editor: Tiled
+
+What we still need to do
+	UI: Title Screen + Buttons
+	HUD
+	Sprite Animation
+	Levels
+	Rocket implemented
+	
+What's holding us back
+	Collisions on tiles
+	Physics tuning
+	
