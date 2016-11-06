@@ -39,7 +39,7 @@ gameObj.Game.prototype = {
         this.physics.p2.convertTilemap(map, layer);
 
         this.physics.p2.restitution = 0.5;
-        this.physics.p2.gravity.y = 300;
+        this.physics.p2.gravity.y = 1300;
         
         facing = 'left';
         jumpTimer = 0;
