@@ -5,16 +5,10 @@ gameObj.MainMenu.prototype = {
 		console.log('MainMenu');
     
     //Add title image
-    var myBackground = this.add.sprite(this.world.centerX, this.world.centerY-250, 'logo');
-    myBackground.anchor.setTo(0.5, 0.5);
-
-    //Add button
-    // The numbers given in parameters are the indexes of the frames, in this order: over, out, down
-    playBtn = this.add.button(this.world.centerX + 80, this.world.centerY-95, 'playBtn', this.startGame, this, 1, 0, 2);
+    var myBackground = this.add.sprite(0, 0, 'mainBG');
+    myBackground.anchor.setTo(0, 0);
+    playBtn = this.add.button(this.world.centerX, this.world.centerY-5, 'playBtn', this.startGame, this, 1, 0, 2);
     playBtn.anchor.setTo(0.5, 0.5);
-        
-    infoBtn = this.add.button(this.world.centerX - 80, this.world.centerY-95, 'infoBtn', this.instructOne, this, 1, 0, 2);
-    infoBtn.anchor.setTo(0.5, 0.5);    
         
 	},
     

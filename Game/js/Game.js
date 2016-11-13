@@ -40,8 +40,8 @@ gameObj.Game.prototype = {
         //  required. There is also a parameter to control optimising the map build.
         this.physics.p2.convertTilemap(map, layer);
 
-        this.physics.p2.restitution = 0.5;
-        this.physics.p2.gravity.y = 1300;
+        this.physics.p2.restitution = 0.2;
+        this.physics.p2.gravity.y = 400;
         
         facing = 'left';
         jumpTimer = 0;
