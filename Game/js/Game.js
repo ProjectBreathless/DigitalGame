@@ -43,8 +43,8 @@ gameObj.Game.prototype = {
         //  required. There is also a parameter to control optimising the map build.
         this.physics.p2.convertTilemap(map, layer);
 
-        this.physics.p2.restitution = 0.2;
-        this.physics.p2.gravity.y = 400;
+        //this.physics.p2.restitution = 0;
+        this.physics.p2.gravity.y = 1400;
         
         crystals = this.add.sprite(300, 200, 'crystal');
         
@@ -55,15 +55,15 @@ gameObj.Game.prototype = {
         //this.physics.p2.enable(cyrstals);
         //this.physics.p2.enable(player);
         
-        facing = 'left';
+        facing = 'right';
         jumpTimer = 0;
         
         door = this.add.sprite(1450, 370, 'door');
 
-        player = this.add.sprite(100, 200, 'dude');
-        player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
-        player.animations.add('turn', [6], 20, true);
-        player.animations.add('right', [8, 9, 10, 11, 12, 13], 10, true);
+        player = this.add.sprite(100, 200, 'Aria');
+        player.animations.add('left', [0, 1, 2, 3, 4, 5], 18, true);
+        //player.animations.add('turn', [4], 20, true);
+        player.animations.add('right', [8, 9, 10, 11, 12, 13], 18, true);
 
         this.physics.p2.enable(player);
 
@@ -73,7 +73,6 @@ gameObj.Game.prototype = {
         this.camera.follow(player);
 
         cursors = this.input.keyboard.createCursorKeys();
-        jumpButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         score = 0;
         treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), {font: "20px Arial", fill: "#ffffff", align: "left"});
         
@@ -82,7 +81,7 @@ gameObj.Game.prototype = {
     update: function() {    
         
         if (cursors.left.isDown){
-            player.body.moveLeft(200);
+            player.body.moveLeft(400);
 
             if (facing != 'left'){
                 player.animations.play('left');
@@ -90,7 +89,7 @@ gameObj.Game.prototype = {
             }
         }
         else if (cursors.right.isDown){
-            player.body.moveRight(200);
+            player.body.moveRight(400);
 
             if (facing != 'right'){
                 player.animations.play('right');
@@ -104,19 +103,19 @@ gameObj.Game.prototype = {
                 player.animations.stop();
 
                 if (facing == 'left'){
-                    player.frame = 0;
+                    player.frame = 6;
                 }
                 else{
-                    player.frame = 5;
+                    player.frame = 7;
                 }
 
                 facing = 'idle';
             }
         }
 
-        if (jumpButton.isDown && this.time.now > jumpTimer && this.checkIfCanJump())
+        if (cursors.up.isDown && this.time.now > jumpTimer && this.checkIfCanJump())
         {
-            player.body.moveUp(300);
+            player.body.moveUp(500);
             jumpTimer = this.time.now + 750;
         }
         
