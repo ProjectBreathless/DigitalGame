@@ -10,6 +10,8 @@ gameObj.Game = function(game) {
     var layer;
     
     var door;
+    var crystals;
+    var treasure;
 };
 
 gameObj.Game.prototype = {
@@ -43,6 +45,15 @@ gameObj.Game.prototype = {
         this.physics.p2.restitution = 0.2;
         this.physics.p2.gravity.y = 400;
         
+        //crystals = this.add.group();
+        
+
+        crystals = this.add.sprite(300, 400, 'crystal');
+        crystals.enableBody = true;
+        crystals.physicBodyType = Phaser.Physics.P2JS;
+        
+        //this.physics.p2.enable(cyrstals);
+    
         facing = 'left';
         jumpTimer = 0;
         
@@ -62,6 +73,8 @@ gameObj.Game.prototype = {
 
         cursors = this.input.keyboard.createCursorKeys();
         jumpButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        
+        //treasure = this.add.text(32, 575, 'Treasure: 0', {font: "20px Arial", fill: "#ffffff", align: "left"});
         
 	},
     // ##########################################################################################
