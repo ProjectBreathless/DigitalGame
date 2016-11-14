@@ -14,7 +14,7 @@ gameObj.Preloader.prototype = {
         this.load.image('walls_1x2', 'levels/walls_1x2.png');
         this.load.image('tiles2', 'levels/tiles2.png');
         
-        this.load.spritesheet('dude', 'levels/dude.png', 32, 48);
+        this.load.spritesheet('dude', 'levels/Aria_Spritesheet.png', 56, 72);
         this.load.image('door', 'levels/Door_locked.png');
         this.load.image('crystal', 'levels/Crystal_Sprite_Small.png')
         

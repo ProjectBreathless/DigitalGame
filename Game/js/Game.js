@@ -61,9 +61,9 @@ gameObj.Game.prototype = {
         door = this.add.sprite(1450, 370, 'door');
 
         player = this.add.sprite(100, 200, 'dude');
-        player.animations.add('left', [0, 1, 2, 3], 10, true);
-        player.animations.add('turn', [4], 20, true);
-        player.animations.add('right', [5, 6, 7, 8], 10, true);
+        player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
+        player.animations.add('turn', [6], 20, true);
+        player.animations.add('right', [8, 9, 10, 11, 12, 13], 10, true);
 
         this.physics.p2.enable(player);
 
