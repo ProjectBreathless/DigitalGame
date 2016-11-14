@@ -120,7 +120,7 @@ gameObj.Game.prototype = {
             jumpTimer = this.time.now + 750;
         }
         
-        if (((player.x < 310) && (player.x > 300)) && ((player.y > 200) && (player.y < 210S)))
+        if (((player.x < 310) && (player.x > 300)) && ((player.y > 200) && (player.y < 210)))
         {
             crystals.kill();
             //if(player.x < 364)
