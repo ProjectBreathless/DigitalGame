@@ -12,6 +12,7 @@ gameObj.Game = function(game) {
     var door;
     var crystals;
     var treasure;
+    var score;
 };
 
 gameObj.Game.prototype = {
@@ -45,15 +46,15 @@ gameObj.Game.prototype = {
         this.physics.p2.restitution = 0.2;
         this.physics.p2.gravity.y = 400;
         
-        //crystals = this.add.group();
+        crystals = this.add.sprite(300, 200, 'crystal');
         
-
-        crystals = this.add.sprite(300, 400, 'crystal');
-        crystals.enableBody = true;
-        crystals.physicBodyType = Phaser.Physics.P2JS;
+        
+        //crystals.enableBody = true;
+        //crystals.physicBodyType = Phaser.Physics.P2JS;
         
         //this.physics.p2.enable(cyrstals);
-    
+        //this.physics.p2.enable(player);
+        
         facing = 'left';
         jumpTimer = 0;
         
@@ -73,47 +74,39 @@ gameObj.Game.prototype = {
 
         cursors = this.input.keyboard.createCursorKeys();
         jumpButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        
-        //treasure = this.add.text(32, 575, 'Treasure: 0', {font: "20px Arial", fill: "#ffffff", align: "left"});
+        score = 0;
+        treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), {font: "20px Arial", fill: "#ffffff", align: "left"});
         
 	},
-    // ##########################################################################################
+    
     update: function() {    
         
-        if (cursors.left.isDown)
-        {
+        if (cursors.left.isDown){
             player.body.moveLeft(200);
 
-            if (facing != 'left')
-            {
+            if (facing != 'left'){
                 player.animations.play('left');
                 facing = 'left';
             }
         }
-        else if (cursors.right.isDown)
-        {
+        else if (cursors.right.isDown){
             player.body.moveRight(200);
 
-            if (facing != 'right')
-            {
+            if (facing != 'right'){
                 player.animations.play('right');
                 facing = 'right';
             }
         }
-        else
-        {
+        else{
             player.body.velocity.x = 0;
 
-            if (facing != 'idle')
-            {
+            if (facing != 'idle'){
                 player.animations.stop();
 
-                if (facing == 'left')
-                {
+                if (facing == 'left'){
                     player.frame = 0;
                 }
-                else
-                {
+                else{
                     player.frame = 5;
                 }
 
@@ -125,7 +118,19 @@ gameObj.Game.prototype = {
         {
             player.body.moveUp(300);
             jumpTimer = this.time.now + 750;
-        }    
+        }
+        
+        if (((player.x < 310) && (player.x > 300)) && ((player.y > 200) && (player.y < 210S)))
+        {
+            crystals.kill();
+            //if(player.x < 364)
+            //{
+            //   crystals.kill();
+                //score += 10;
+            //}
+            
+            
+        }
     
 },
     checkIfCanJump: function() {
