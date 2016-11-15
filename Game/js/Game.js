@@ -1,10 +1,9 @@
 gameObj.Game = function(game) {
     // Declare game variables
     var player;
-    var facing = 'left';
+    var facing = 'right';
     var jumpTimer = 0;
     var cursors;
-    var jumpButton;
 
     var map;
     var layer;
@@ -26,9 +25,9 @@ gameObj.Game.prototype = {
 
         map = this.add.tilemap('map');
 
-        map.addTilesetImage('ground_1x1');
-        map.addTilesetImage('walls_1x2');
-        map.addTilesetImage('tiles2');
+        map.addTilesetImage('Alien_Ship_Tileset');
+        //map.addTilesetImage('walls_1x2');
+        //map.addTilesetImage('tiles2');
 
         layer = map.createLayer('Tile Layer 1');
 
@@ -36,7 +35,7 @@ gameObj.Game.prototype = {
 
         //  Set the tiles for collision.
         //  Do this BEFORE generating the p2 bodies below.
-        map.setCollisionBetween(1, 12);
+        map.setCollisionBetween(1, 200);
 
         //  Convert the tilemap layer into bodies. Only tiles that collide (see above) are created.
         //  This call returns an array of body objects which you can perform addition actions on if
@@ -58,7 +57,7 @@ gameObj.Game.prototype = {
         facing = 'right';
         jumpTimer = 0;
         
-        door = this.add.sprite(1450, 370, 'door');
+        door = this.add.sprite(1050, 270, 'door');
 
         player = this.add.sprite(100, 200, 'Aria');
         player.animations.add('left', [0, 1, 2, 3, 4, 5], 18, true);
