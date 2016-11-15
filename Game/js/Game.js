@@ -1,4 +1,4 @@
-gameObj.Game = function(game) {
+gameObj.Game = function (game) {
     // Declare game variables
     var player;
     var facing = 'right';
@@ -7,7 +7,7 @@ gameObj.Game = function(game) {
 
     var map;
     var layer;
-    
+
     var door;
     var crystals;
     var treasure;
@@ -15,142 +15,180 @@ gameObj.Game = function(game) {
 };
 
 gameObj.Game.prototype = {
-    
-	create: function() {
-		console.log("State - Game");
-		
-        this.physics.startSystem(Phaser.Physics.P2JS);
+
+    create: function () {
+        console.log("State - Game");
+
+        this.game.input.mouse.capture = true;
+
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+
+        this.physics.arcade.setBoundsToWorld();
 
         this.stage.backgroundColor = '#2d2d2d';
 
         map = this.add.tilemap('map');
 
         map.addTilesetImage('Alien_Ship_Tileset');
-        //map.addTilesetImage('walls_1x2');
-        //map.addTilesetImage('tiles2');
 
         layer = map.createLayer('Tile Layer 1');
 
         layer.resizeWorld();
 
-        //  Set the tiles for collision.
-        //  Do this BEFORE generating the p2 bodies below.
-        map.setCollisionBetween(1, 200);
 
-        //  Convert the tilemap layer into bodies. Only tiles that collide (see above) are created.
-        //  This call returns an array of body objects which you can perform addition actions on if
-        //  required. There is also a parameter to control optimising the map build.
-        this.physics.p2.convertTilemap(map, layer);
+        map.setCollisionBetween(1, 18);
 
-        //this.physics.p2.restitution = 0;
-        this.physics.p2.gravity.y = 1400;
-        
-        crystals = this.add.sprite(300, 200, 'crystal');
-        
-        
-        //crystals.enableBody = true;
-        //crystals.physicBodyType = Phaser.Physics.P2JS;
-        
-        //this.physics.p2.enable(cyrstals);
-        //this.physics.p2.enable(player);
-        
+        crystals = this.add.sprite(100, 500, 'crystal');
+
         facing = 'right';
         jumpTimer = 0;
-        
+
         door = this.add.sprite(1050, 270, 'door');
 
-        player = this.add.sprite(100, 200, 'Aria');
+        player = this.add.sprite(100, 400, 'Aria');
         player.animations.add('left', [0, 1, 2, 3, 4, 5], 18, true);
         //player.animations.add('turn', [4], 20, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 18, true);
 
-        this.physics.p2.enable(player);
+        this.game.physics.arcade.enable(player);
 
-        player.body.fixedRotation = true;
+        //Set some physics on the sprite
+        player.body.bounce.y = 0;
+        this.game.physics.arcade.gravity.y = 1750;
+        player.body.collideWorldBounds = true;
+        player.anchor.setTo(0.5,0.5);
+
+        player.body.maxSpeed = 400;
+        player.body.acceleration = 40;
+        player.body.aerialAcceleration = 4/7;
+        player.body.friction = 40;
+        player.body.rocketJump = true;
+        // player.body.friction = 0.5;
+
+        // player.body.fixedRotation = true;
         // player.body.setMaterial(characterMaterial);
 
-        this.camera.follow(player);
+        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
         cursors = this.input.keyboard.createCursorKeys();
+       a =this.game.input.keyboard.addKey(Phaser.Keyboard.A) 
+       d = this.game.input.keyboard.addKey(Phaser.Keyboard.D)
+       w = this.game.input.keyboard.addKey(Phaser.Keyboard.W)  
         score = 0;
-        treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), {font: "20px Arial", fill: "#ffffff", align: "left"});
-        
-	},
-    
-    update: function() {    
-        
-        if (cursors.left.isDown){
-            player.body.moveLeft(400);
+        treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px Arial", fill: "#ffffff", align: "left" });
 
-            if (facing != 'left'){
+    },
+
+    update: function () {
+
+        this.game.physics.arcade.collide(player, layer);
+
+        if(this.game.input.activePointer.leftButton.isDown && player.body.rocketJump){
+            console.log(this.game.physics.arcade.angleToPointer(player));
+            console.log(this.game.physics.arcade.distanceToPointer(player));
+            player.body.velocity.x -= Math.cos(this.game.physics.arcade.angleToPointer(player)) * 500;
+            player.body.velocity.y = 0;
+            player.body.velocity.y -= Math.sin(this.game.physics.arcade.angleToPointer(player)) * 650;
+            // player.body.velocity.y = -600;
+            player.body.rocketJump = false;
+        }
+
+        if (a.isDown && player.body.onFloor()) {
+            if(player.body.velocity.x > -player.body.maxSpeed){
+                player.body.velocity.x -= player.body.acceleration;
+            } else {
+                player.body.velocity.x = -player.body.maxSpeed
+            }
+            if (facing != 'left') {
                 player.animations.play('left');
                 facing = 'left';
             }
         }
-        else if (cursors.right.isDown){
-            player.body.moveRight(400);
+        else if (d.isDown && player.body.onFloor()) {
+            if(player.body.velocity.x < player.body.maxSpeed){
+                player.body.velocity.x += player.body.acceleration;
+            } else {
+                player.body.velocity.x = player.body.maxSpeed
+            }
 
-            if (facing != 'right'){
+            if (facing != 'right') {
                 player.animations.play('right');
                 facing = 'right';
             }
         }
-        else{
-            player.body.velocity.x = 0;
+        else if (player.body.onFloor()) {
+            /*friction */
+            
+            if(player.body.velocity.x < 0){
+                player.body.velocity.x += player.body.friction;
+            } else if (player.body.velocity.x > 0){
+                player.body.velocity.x -= player.body.friction;
+            }
 
-            if (facing != 'idle'){
+            if (facing != 'idle') {
                 player.animations.stop();
 
-                if (facing == 'left'){
+                if (facing == 'left') {
                     player.frame = 6;
                 }
-                else{
+                else {
                     player.frame = 7;
                 }
 
                 facing = 'idle';
             }
         }
+        /* if in air: */
+        else if (a.isDown) {
 
-        if (cursors.up.isDown && this.time.now > jumpTimer && this.checkIfCanJump())
-        {
-            player.body.moveUp(500);
-            jumpTimer = this.time.now + 750;
+            if(player.body.velocity.x > -player.body.maxSpeed){
+                player.body.velocity.x -= player.body.acceleration*player.body.aerialAcceleration;
+            } else {
+                player.body.velocity.x = -player.body.maxSpeed
+            }
+
+            if (facing != 'left') {
+                player.animations.play('left');
+                facing = 'left';
+            }
         }
-        
-        if (((player.x < 310) && (player.x > 300)) && ((player.y > 200) && (player.y < 210)))
-        {
+        else if (d.isDown) {
+            /*Gives player opportunity to change directions, even in air*/
+            if(player.body.velocity.x < player.body.maxSpeed){
+                player.body.velocity.x += player.body.acceleration*player.body.aerialAcceleration;
+            } else {
+                player.body.velocity.x = player.body.maxSpeed
+            }
+
+            if (facing != 'right') {
+                player.animations.play('right');
+                facing = 'right';
+            }
+        }
+
+        if (w.isDown && player.body.onFloor()) {
+            player.body.velocity.y = -600;
+        }
+
+        // if (w.isDown) && this.time.now > jumpTimer && this.checkIfCanJump()) {
+        //     player.body.moveUp(500);
+        //     jumpTimer = this.time.now + 750;
+        // }
+
+        if (((player.x < 310) && (player.x > 300)) && ((player.y > 200) && (player.y < 210))) {
             crystals.kill();
             //if(player.x < 364)
             //{
             //   crystals.kill();
-                //score += 10;
+            //score += 10;
             //}
-            
-            
-        }
-    
-},
-    checkIfCanJump: function() {
-        
-        var yAxis = p2.vec2.fromValues(0, 1);
-        var result = false;
-
-        for (var i = 0; i < this.physics.p2.world.narrowphase.contactEquations.length; i++)
-        {
-            var c = this.physics.p2.world.narrowphase.contactEquations[i];
-
-            if (c.bodyA === player.body.data || c.bodyB === player.body.data)
-            {
-                var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
-                if (c.bodyA === player.body.data) d *= -1;
-                if (d > 0.5) result = true;
-            }
         }
 
-        return result;
-        
-    },
+        if(player.body.onFloor()){
+            player.body.rocketJump = true;
+        }
+
+    }
 
 };
 

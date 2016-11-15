@@ -9,8 +9,8 @@ gameObj.Preloader.prototype = {
         this.load.spritesheet('playBtn', 'imgs/titlePlay.png', 224, 100);
         
         //Level 1
-        this.load.tilemap('map', 'levels/test_level.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.image('Alien_Ship_Tileset', 'levels/Alien_Ship_Tileset.png');
+        this.load.tilemap('map', 'levels/tiled_ninja_test.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('Alien_Ship_Tileset', 'levels/Alien_Ship_Tileset_2.png');
         //this.load.image('walls_1x2', 'levels/walls_1x2.png');
         //this.load.image('tiles2', 'levels/tiles2.png');
         
