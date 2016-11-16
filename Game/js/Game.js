@@ -38,6 +38,8 @@ gameObj.Game.prototype = {
 
         map.setCollisionBetween(1, 200);
 
+        
+        
         crystals = this.add.sprite(100, 500, 'crystal');
 
         facing = 'right';
