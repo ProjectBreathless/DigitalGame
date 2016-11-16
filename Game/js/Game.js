@@ -45,7 +45,7 @@ gameObj.Game.prototype = {
 
         door = this.add.sprite(1050, 270, 'door');
 
-        player = this.add.sprite(100, 300, 'Aria');
+        player = this.add.sprite(100, 300, 'Aria', 7);
         player.animations.add('left', [0, 1, 2, 3, 4, 5], 18, true);
         //player.animations.add('turn', [4], 20, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 18, true);
