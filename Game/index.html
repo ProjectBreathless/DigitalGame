@@ -38,7 +38,7 @@
 	<script>
 		window.onload = function() {
 			console.log('windows loaded');
-			var game = new Phaser.Game(1200, 600, Phaser.AUTO, 'phaser-canvas');
+			var game = new Phaser.Game(1200, 600, Phaser.AUTO, 'phaser-canvas', null, false, false);
 			game.state.add('Boot', gameObj.Boot);
 			game.state.add('Preloader', gameObj.Preloader);
 			game.state.add('MainMenu', gameObj.MainMenu);
