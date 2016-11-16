@@ -67,13 +67,25 @@ gameObj.Game.prototype = {
 
         // player.body.fixedRotation = true;
         // player.body.setMaterial(characterMaterial);
+        crystals = this.game.add.group();
+        crystals.enableBody = true;
+        crystals.physicsBodyType = Phaser.Physics.ARCADE;
+        //crystals.body.collideWorldBounds = true;
         
-        crystals = this.add.sprite(300, 300, 'crystal');
-        crystals.anchor.setTo(0.5, 0.5);
-        this.physics.arcade.enable(crystals);
-        crystals.body.collideWorldBounds = true;
+        var positions = [300, 325, 350, 375];
+        
+        for (var i = 0; i < 4; i++)
+        {
+            var c = crystals.create(positions[i], 300, 'crystal');
+            c.name = "crys" + i;
+            c.body.immovable = true;
+        }
+        //crystals = this.add.sprite(300, 300, 'crystal');
+        //crystals.anchor.setTo(0.5, 0.5);
+        //this.physics.arcade.enable(crystals);
+        
        
-        crystals.body.onCollide = new Phaser.Signal();
+        //crystals.body.onCollide = new Phaser.Signal();
         //crystals.body.onCollide.add(this.collect, this);
 
         emitter = this.game.add.emitter(0, 0, 50);
@@ -225,8 +237,9 @@ gameObj.Game.prototype = {
         //     jumpTimer = this.time.now + 750;
         // }
 
-        this.physics.arcade.collide(player, crystals, this.collect, null, this);
-        crystals.imovable = true;
+        this.physics.arcade.overlap(player, crystals, this.collect, null, this);
+        //this.physics.arcade.collide(player, crystals, this.collect, null, this);
+        //crystals.imovable = true;
 
         if (player.body.onFloor()) {
             player.body.rocketJump = true;
