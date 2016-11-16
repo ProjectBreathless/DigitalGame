@@ -108,6 +108,8 @@ gameObj.Game.prototype = {
         w = this.game.input.keyboard.addKey(Phaser.Keyboard.W)
         score = 0;
         treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px Arial", fill: "#ffffff", align: "left" });
+        treasure.fixedToCamera = true;
+        treasure.cameraOffset.setTo(10, 550);
 
     },
 
