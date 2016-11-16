@@ -106,7 +106,9 @@ gameObj.Game.prototype = {
         a = this.game.input.keyboard.addKey(Phaser.Keyboard.A)
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D)
         w = this.game.input.keyboard.addKey(Phaser.Keyboard.W)
+        
         score = 0;
+        
         treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px Arial", fill: "#ffffff", align: "left" });
         treasure.fixedToCamera = true;
         treasure.cameraOffset.setTo(10, 550);
@@ -246,7 +248,10 @@ gameObj.Game.prototype = {
     },
     collect: function(player, crystals) 
     {
-        console.log("COINS!");
+        console.log("Treasure!");
+        score++
+        console.log("Treasure! = " + score);
+        treasure.setText("Treasure: " + score);
         //remove sprite
         crystals.destroy();
     },
