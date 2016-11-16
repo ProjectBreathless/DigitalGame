@@ -56,7 +56,7 @@ gameObj.Game.prototype = {
         player.body.bounce.y = 0;
         //this.game.physics.arcade.gravity.y = 1750;
         //this.game.physics.arcade.gravity.y = 0;
-        player.body.gravity.y = 1750;
+        player.body.gravity.y = 1500;
         player.body.collideWorldBounds = true;
         player.anchor.setTo(0.5, 0.5);
 
@@ -128,9 +128,10 @@ gameObj.Game.prototype = {
         if (this.game.input.activePointer.leftButton.isDown && !player.body.onFloor() && player.body.rocketJump) {
             console.log(this.game.physics.arcade.angleToPointer(player));
             console.log(this.game.physics.arcade.distanceToPointer(player));
-            player.body.velocity.x -= Math.cos(this.game.physics.arcade.angleToPointer(player)) * 500;
+            player.body.velocity.x = 0;
+            player.body.velocity.x -= Math.cos(this.game.physics.arcade.angleToPointer(player)) * 700;
             player.body.velocity.y = 0;
-            player.body.velocity.y -= Math.sin(this.game.physics.arcade.angleToPointer(player)) * 650;
+            player.body.velocity.y -= Math.sin(this.game.physics.arcade.angleToPointer(player)) * 700;
             // player.body.velocity.y = -600;
             player.body.rocketJump = false;
 
