@@ -54,7 +54,9 @@ gameObj.Game.prototype = {
 
         //Set some physics on the sprite
         player.body.bounce.y = 0;
-        this.game.physics.arcade.gravity.y = 1750;
+        //this.game.physics.arcade.gravity.y = 1750;
+        //this.game.physics.arcade.gravity.y = 0;
+        player.body.gravity.y = 1750;
         player.body.collideWorldBounds = true;
         player.anchor.setTo(0.5, 0.5);
 
@@ -72,12 +74,14 @@ gameObj.Game.prototype = {
         crystals.physicsBodyType = Phaser.Physics.ARCADE;
         //crystals.body.collideWorldBounds = true;
         
-        var positions = [300, 325, 350, 375];
+        var xPositions = [300, 325, 350, 375];
+        var yPositions = [200, 300, 400, 200]
         
         for (var i = 0; i < 4; i++)
         {
-            var c = crystals.create(positions[i], 300, 'crystal');
+            var c = crystals.create(xPositions[i], yPositions[i], 'crystal');
             c.name = "crys" + i;
+            c.body.velocity[1] = 0;
             c.body.immovable = true;
         }
         //crystals = this.add.sprite(300, 300, 'crystal');
