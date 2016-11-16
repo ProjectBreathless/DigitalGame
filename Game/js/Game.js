@@ -38,7 +38,7 @@ gameObj.Game.prototype = {
 
         map.setCollisionBetween(1, 200);
 
-        crystals = this.add.sprite(100, 500, 'crystal');
+        
 
         facing = 'right';
         jumpTimer = 0;
@@ -67,6 +67,14 @@ gameObj.Game.prototype = {
 
         // player.body.fixedRotation = true;
         // player.body.setMaterial(characterMaterial);
+        
+        crystals = this.add.sprite(300, 300, 'crystal');
+        crystals.anchor.setTo(0.5, 0.5);
+        this.physics.arcade.enable(crystals);
+        crystals.body.collideWorldBounds = true;
+       
+        crystals.body.onCollide = new Phaser.Signal();
+        //crystals.body.onCollide.add(this.collect, this);
 
         emitter = this.game.add.emitter(0, 0, 50);
         emitter.gravity = 0;
@@ -94,6 +102,7 @@ gameObj.Game.prototype = {
     update: function () {
 
         this.game.physics.arcade.collide(player, layer);
+        this.game.physics.arcade.collide(crystals,layer);
         this.game.physics.arcade.collide(emitter, layer);
 
         if (this.game.input.activePointer.leftButton.isDown && !player.body.onFloor() && player.body.rocketJump) {
@@ -212,20 +221,20 @@ gameObj.Game.prototype = {
         //     jumpTimer = this.time.now + 750;
         // }
 
-        if (((player.x < 310) && (player.x > 300)) && ((player.y > 200) && (player.y < 210))) {
-            crystals.kill();
-            //if(player.x < 364)
-            //{
-            //   crystals.kill();
-            //score += 10;
-            //}
-        }
+        this.physics.arcade.collide(player, crystals, this.collect, null, this);
+        crystals.imovable = true;
 
         if (player.body.onFloor()) {
             player.body.rocketJump = true;
         }
 
-    }
+    },
+    collect: function(player, crystals) 
+    {
+        console.log("COINS!");
+        //remove sprite
+        crystals.destroy();
+    },
 
 };
 
