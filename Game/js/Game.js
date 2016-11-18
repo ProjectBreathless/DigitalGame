@@ -14,6 +14,7 @@ gameObj.Game = function (game) {
     var airPacks;
     var treasure;
     var score;
+    var timer, timerEvent;
 };
 
 gameObj.Game.prototype = {
@@ -141,6 +142,15 @@ gameObj.Game.prototype = {
         treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px Arial", fill: "#ffffff", align: "left" });
         treasure.fixedToCamera = true;
         treasure.cameraOffset.setTo(10, 550);
+        
+        // Create the timer
+        timer = this.game.time.create();
+        
+        // Set the length of the timer
+        timerEvent = timer.add(Phaser.Timer.MINUTE * 1 + Phaser.Timer.SECOND * 30, this.endTimer, this);
+        
+        // Start the timer
+        timer.start();
 
     },
 
@@ -304,6 +314,25 @@ gameObj.Game.prototype = {
         console.log("Treasure! = " + score);
         //remove sprite
         fuelPacks.destroy();
+    },
+    render: function () {
+        // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
+        if (timer.running) {
+            this.game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 2, 14, "#ff0");
+        }
+        else {
+            this.game.debug.text("Done!", 2, 14, "#0f0");
+        }
+    },
+    endTimer: function() {
+        // Stop the timer when the delayed event triggers
+        timer.stop();
+    },
+    formatTime: function(s) {
+        // Convert seconds (s) to a nicely formatted and padded time string
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);   
     },
 
 };
