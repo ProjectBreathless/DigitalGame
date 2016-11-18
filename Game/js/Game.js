@@ -72,16 +72,17 @@ gameObj.Game.prototype = {
         player.body.friction = 40;
         player.body.rocketJump = true;
         // player.body.friction = 0.5;
-
+        
+        var xPositions = [300, 325, 350, 375];
+        var yPositions = [200, 300, 150, 200];
+        
+        
+        
         // player.body.fixedRotation = true;
         // player.body.setMaterial(characterMaterial);
         crystals = this.game.add.group();
         crystals.enableBody = true;
         crystals.physicsBodyType = Phaser.Physics.ARCADE;
-        //crystals.body.collideWorldBounds = true;
-        
-        var xPositions = [300, 325, 350, 375];
-        var yPositions = [200, 300, 150, 200]
         
         for (var i = 0; i < 4; i++)
         {
@@ -103,14 +104,21 @@ gameObj.Game.prototype = {
             f.body.gravity.y = 1750;
         }
         
+        var fuelXPositions = [490, 900, 630];
+        var fuelYPositions = [200, 750, 850];
+        
         fuelPacks = this.game.add.group();
         fuelPacks.enableBody = true;
         fuelPacks.physicsBodyType = Phaser.Physics.ARCADE;
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < 3; i++)
         {
-            var e = fuelPacks.create((xPositions[i] + 100), (xPositions[i] - 50), 'fuel');
+            var e = fuelPacks.create((fuelXPositions[i] + 100), (fuelYPositions[i] - 50), 'fuel');
             e.name = "fuel" + i;
             e.body.velocity[1] = 0;
+            if(i != 1){
+                e.body.gravity.y = 1750
+            }
+            
             e.body.immovable = true;
         }
         //crystals = this.add.sprite(300, 300, 'crystal');
@@ -152,7 +160,7 @@ gameObj.Game.prototype = {
         timer = this.game.time.create();
         
         min = 0;
-        sec = 30;
+        sec = 20;
         
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
