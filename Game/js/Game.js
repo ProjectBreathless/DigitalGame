@@ -15,6 +15,8 @@ gameObj.Game = function (game) {
     var treasure;
     var score;
     var timer, timerEvent;
+    var min;
+    var sec;
 };
 
 gameObj.Game.prototype = {
@@ -146,8 +148,11 @@ gameObj.Game.prototype = {
         // Create the timer
         timer = this.game.time.create();
         
+        min = 0;
+        sec = 30;
+        
         // Set the length of the timer
-        timerEvent = timer.add(Phaser.Timer.MINUTE * 1 + Phaser.Timer.SECOND * 30, this.endTimer, this);
+        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
         
         // Start the timer
         timer.start();
@@ -304,6 +309,8 @@ gameObj.Game.prototype = {
         console.log("Treasure!");
         
         console.log("Treasure! = " + score);
+        //increment the timer
+        
         //remove sprite
         airPacks.destroy();
     },
