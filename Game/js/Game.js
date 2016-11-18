@@ -17,6 +17,7 @@ gameObj.Game = function (game) {
     var timer, timerEvent;
     var min;
     var sec;
+    var rocketReady;
 };
 
 gameObj.Game.prototype = {
@@ -145,6 +146,8 @@ gameObj.Game.prototype = {
         treasure.fixedToCamera = true;
         treasure.cameraOffset.setTo(10, 550);
         
+        rocketReady = true;
+        
         // Create the timer
         timer = this.game.time.create();
         
@@ -166,39 +169,45 @@ gameObj.Game.prototype = {
         this.game.physics.arcade.collide(fuelPacks, layer);
         this.game.physics.arcade.collide(airPacks, layer);
         this.game.physics.arcade.collide(emitter, layer);
+        
+        //Rocket Jump
+        if(rocketReady){
+            if (this.game.input.activePointer.leftButton.isDown && !player.body.onFloor() && player.body.rocketJump) {
+                console.log(this.game.physics.arcade.angleToPointer(player));
+                console.log(this.game.physics.arcade.distanceToPointer(player));
+                player.body.velocity.x = 0;
+                player.body.velocity.x -= Math.cos(this.game.physics.arcade.angleToPointer(player)) * 700;
+                player.body.velocity.y = 0;
+                player.body.velocity.y -= Math.sin(this.game.physics.arcade.angleToPointer(player)) * 700;
+                // player.body.velocity.y = -600;
+                player.body.rocketJump = false;
 
-        if (this.game.input.activePointer.leftButton.isDown && !player.body.onFloor() && player.body.rocketJump) {
-            console.log(this.game.physics.arcade.angleToPointer(player));
-            console.log(this.game.physics.arcade.distanceToPointer(player));
-            player.body.velocity.x = 0;
-            player.body.velocity.x -= Math.cos(this.game.physics.arcade.angleToPointer(player)) * 700;
-            player.body.velocity.y = 0;
-            player.body.velocity.y -= Math.sin(this.game.physics.arcade.angleToPointer(player)) * 700;
-            // player.body.velocity.y = -600;
-            player.body.rocketJump = false;
 
 
-
-            /*particle effect */
-            emitter.x = player.x;
-            emitter.y = player.y;
-            var t = this;
-            emitter.forEach(function (singleParticle) {
+                /*particle effect */
+                emitter.x = player.x;
+                emitter.y = player.y;
+                var t = this;
+                emitter.forEach(function (singleParticle) {
                 if(!singleParticle.animations.isPlaying){
                     singleParticle.animations.play('smoke', 28, false, true);
-                }
+                    }
 
                 // console.log(singleParticle);
                 // singleParticle.body.velocity.x = Math.cos(t.game.physics.arcade.angleToPointer(player)) * 1000w;
                 // singleParticle.body.velocity.y = Math.sin(t.game.physics.arcade.angleToPointer(player)) * 1000;
-            });
+                });
 
-            emitter.setXSpeed(Math.cos(this.game.physics.arcade.angleToPointer(player))*50 + (Math.random()-0.5)*600, Math.cos(this.game.physics.arcade.angleToPointer(player))*350 + (Math.random()-0.5)*600) 
+                emitter.setXSpeed(Math.cos(this.game.physics.arcade.angleToPointer(player))*50 + (Math.random()-0.5)*600, Math.cos(this.game.physics.arcade.angleToPointer(player))*350 + (Math.random()-0.5)*600) 
             
-            emitter.setYSpeed(Math.sin(this.game.physics.arcade.angleToPointer(player))*150 + (Math.random()-0.5)*600, Math.sin(this.game.physics.arcade.angleToPointer(player))*250 + (Math.random()-0.5)*600)
+                emitter.setYSpeed(Math.sin(this.game.physics.arcade.angleToPointer(player))*150 + (Math.random()-0.5)*600, Math.sin(this.game.physics.arcade.angleToPointer(player))*250 + (Math.random()-0.5)*600)
             
-            emitter.start(true, 0, null, 15);
+                emitter.start(true, 0, null, 15);
+                rocketReady = false;
+            }
+                
         }
+        
         
 
         if (a.isDown && player.body.onFloor()) {
@@ -306,12 +315,12 @@ gameObj.Game.prototype = {
     },
     collectAir: function(player, airPacks) 
     {
-        console.log("Treasure!");
-        
-        console.log("Treasure! = " + score);
+        console.log("Air!");
         timer.stop();
-        sec = sec + 10;
+        sec = sec + 5;
         console.log(sec);
+        //timer.remove(timerEvent);
+        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
         timer.start();
         
         //remove sprite
@@ -319,9 +328,8 @@ gameObj.Game.prototype = {
     },
     collectFuel: function(player, fuelPacks) 
     {
-        console.log("Treasure!");
-        
-        console.log("Treasure! = " + score);
+        console.log("Fuel!");
+        rocketReady = true;
         //remove sprite
         fuelPacks.destroy();
     },
