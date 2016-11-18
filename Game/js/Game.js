@@ -46,9 +46,9 @@ gameObj.Game.prototype = {
         door = this.add.sprite(1050, 270, 'door');
 
         player = this.add.sprite(100, 300, 'Aria', 7);
-        player.animations.add('left', [0, 1, 2, 3, 4, 5], 18, true);
+        player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         //player.animations.add('turn', [4], 20, true);
-        player.animations.add('right', [8, 9, 10, 11, 12, 13], 18, true);
+        player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
         this.game.physics.arcade.enable(player);
 
@@ -60,7 +60,7 @@ gameObj.Game.prototype = {
         player.body.collideWorldBounds = true;
         player.anchor.setTo(0.5, 0.5);
 
-        player.body.maxSpeed = 400;
+        player.body.maxSpeed = 450;
         player.body.acceleration = 40;
         player.body.aerialAcceleration = 4 / 7;
         player.body.friction = 40;
