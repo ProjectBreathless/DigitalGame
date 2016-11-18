@@ -16,7 +16,9 @@ gameObj.Preloader.prototype = {
         
         this.load.spritesheet('Aria', 'levels/Aria_Spritesheet.png', 46, 72);
         this.load.image('door', 'levels/Door_locked.png');
-        this.load.image('crystal', 'levels/Crystal_Sprite_Small.png')
+        this.load.image('crystal', 'levels/Crystal_Sprite_Small.png');
+		this.load.image('air', 'levels/Air_Capsule.png');
+        this.load.image('fuel', 'levels/Fuel_Pod.png');
 
         
         this.load.spritesheet('rocketParticles', 'levels/rocketParticle_spritesheet.png', 8, 8);
