@@ -8,10 +8,13 @@ gameObj.Game = function (game) {
     var map;
     var layer;
 
-    var door;
+	var door;
     var crystals;
+    var fuelPacks;
+    var airPacks;
     var treasure;
     var score;
+    var timer, timerEvent;
 };
 
 gameObj.Game.prototype = {
@@ -75,7 +78,7 @@ gameObj.Game.prototype = {
         //crystals.body.collideWorldBounds = true;
         
         var xPositions = [300, 325, 350, 375];
-        var yPositions = [200, 300, 400, 200]
+        var yPositions = [200, 300, 150, 200]
         
         for (var i = 0; i < 4; i++)
         {
@@ -83,6 +86,29 @@ gameObj.Game.prototype = {
             c.name = "crys" + i;
             c.body.velocity[1] = 0;
             c.body.immovable = true;
+        }
+        
+        airPacks = this.game.add.group();
+        airPacks.enableBody = true;
+        airPacks.physicsBodyType = Phaser.Physics.ARCADE;
+        for (var i = 0; i < 4; i++)
+        {
+            var f = airPacks.create(xPositions[i], yPositions[i], 'air');
+            f.name = "air" + i;
+            f.body.velocity[1] = 0;
+            f.body.immovable = true;
+            f.body.gravity.y = 1750;
+        }
+        
+        fuelPacks = this.game.add.group();
+        fuelPacks.enableBody = true;
+        fuelPacks.physicsBodyType = Phaser.Physics.ARCADE;
+        for (var i = 0; i < 4; i++)
+        {
+            var e = fuelPacks.create((xPositions[i] + 100), (xPositions[i] - 50), 'fuel');
+            e.name = "fuel" + i;
+            e.body.velocity[1] = 0;
+            e.body.immovable = true;
         }
         //crystals = this.add.sprite(300, 300, 'crystal');
         //crystals.anchor.setTo(0.5, 0.5);
@@ -116,6 +142,15 @@ gameObj.Game.prototype = {
         treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px Arial", fill: "#ffffff", align: "left" });
         treasure.fixedToCamera = true;
         treasure.cameraOffset.setTo(10, 550);
+        
+        // Create the timer
+        timer = this.game.time.create();
+        
+        // Set the length of the timer
+        timerEvent = timer.add(Phaser.Timer.MINUTE * 1 + Phaser.Timer.SECOND * 30, this.endTimer, this);
+        
+        // Start the timer
+        timer.start();
 
     },
 
@@ -123,6 +158,8 @@ gameObj.Game.prototype = {
 
         this.game.physics.arcade.collide(player, layer);
         this.game.physics.arcade.collide(crystals,layer);
+        this.game.physics.arcade.collide(fuelPacks, layer);
+        this.game.physics.arcade.collide(airPacks, layer);
         this.game.physics.arcade.collide(emitter, layer);
 
         if (this.game.input.activePointer.leftButton.isDown && !player.body.onFloor() && player.body.rocketJump) {
@@ -242,7 +279,9 @@ gameObj.Game.prototype = {
         //     jumpTimer = this.time.now + 750;
         // }
 
-        this.physics.arcade.overlap(player, crystals, this.collect, null, this);
+        this.physics.arcade.overlap(player, crystals, this.collectCrystal, null, this);
+        this.physics.arcade.overlap(player, airPacks, this.collectAir, null, this);
+        this.physics.arcade.overlap(player, fuelPacks, this.collectFuel, null, this);
         //this.physics.arcade.collide(player, crystals, this.collect, null, this);
         //crystals.imovable = true;
 
@@ -251,7 +290,7 @@ gameObj.Game.prototype = {
         }
 
     },
-    collect: function(player, crystals) 
+    collectCrystal: function(player, crystals) 
     {
         console.log("Treasure!");
         score++
@@ -259,6 +298,41 @@ gameObj.Game.prototype = {
         treasure.setText("Treasure: " + score);
         //remove sprite
         crystals.destroy();
+    },
+    collectAir: function(player, airPacks) 
+    {
+        console.log("Treasure!");
+        
+        console.log("Treasure! = " + score);
+        //remove sprite
+        airPacks.destroy();
+    },
+    collectFuel: function(player, fuelPacks) 
+    {
+        console.log("Treasure!");
+        
+        console.log("Treasure! = " + score);
+        //remove sprite
+        fuelPacks.destroy();
+    },
+    render: function () {
+        // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
+        if (timer.running) {
+            this.game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 2, 14, "#ff0");
+        }
+        else {
+            this.game.debug.text("Done!", 2, 14, "#0f0");
+        }
+    },
+    endTimer: function() {
+        // Stop the timer when the delayed event triggers
+        timer.stop();
+    },
+    formatTime: function(s) {
+        // Convert seconds (s) to a nicely formatted and padded time string
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);   
     },
 
 };
