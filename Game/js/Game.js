@@ -309,7 +309,10 @@ gameObj.Game.prototype = {
         console.log("Treasure!");
         
         console.log("Treasure! = " + score);
-        //increment the timer
+        timer.stop();
+        sec = sec + 10;
+        console.log(sec);
+        timer.start();
         
         //remove sprite
         airPacks.destroy();
