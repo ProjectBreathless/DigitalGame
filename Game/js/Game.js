@@ -348,6 +348,7 @@ gameObj.Game.prototype = {
         }
         else {
             this.game.debug.text("Done!", 2, 14, "#0f0");
+            shutdown();
         }
     },
     endTimer: function() {
@@ -359,6 +360,15 @@ gameObj.Game.prototype = {
         var minutes = "0" + Math.floor(s / 60);
         var seconds = "0" + (s - minutes * 60);
         return minutes.substr(-2) + ":" + seconds.substr(-2);   
+    },
+    //Nuetralizes all input from the player
+    shutdown: function () {    
+	   this.cursor = null;       
+	   if (this.player) {
+           this.player.destroy();
+           this.player = null;    
+	   }    
+	        
     },
 
 };
