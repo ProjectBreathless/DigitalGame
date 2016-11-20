@@ -5,9 +5,12 @@ gameObj.Preloader.prototype = {
 		console.log("State - preload");
 		
         //Main Menu
-        this.load.image('mainBG', 'imgs/titleScreen.png');
-        this.load.spritesheet('playBtn', 'imgs/titlePlay.png', 224, 100);
-        this.load.spritesheet('titleShip', 'imgs/titleShip.png', 224, 100);
+        this.load.image('mainBG', 'imgs/title/titleScreen.png');
+        this.load.image('titleLogo', 'imgs/title/titleLogo.png');
+        
+        this.load.spritesheet('playBtn', 'imgs/title/titlePlay.png', 224, 100);
+        this.load.spritesheet('titleShip', 'imgs/title/titleShip.png', 200, 82);
+        this.load.spritesheet('titleText', 'imgs/title/titleText.png', 200, 100);
         
         //Level 1
         this.load.tilemap('map', 'levels/mwagar_tiles.json', null, Phaser.Tilemap.TILED_JSON);

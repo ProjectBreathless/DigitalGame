@@ -4,20 +4,10 @@ gameObj.Loser.prototype = {
 	create: function() {
 		console.log("State - Loser");
 		//Add background image
-		var myLogo = this.add.sprite(this.world.centerX, this.world.centerY, 'loseBg');
-		myLogo.anchor.setTo(0.5, 0.5);
-
-		//Add title image
-		var myBackground = this.add.sprite(this.world.centerX, this.world.centerY-250, 'loseImg');
-		myBackground.anchor.setTo(0.5, 0.5);
-
-		//Add list graphics
-        
-        var scoreDisp = this.add.sprite(this.world.centerX + 150, this.world.centerY - 0, 'scoreDisp'); // Where img displays on screen
-        scoreDisp.anchor.setTo(0.5, 0.5); // Centers the origin
-            
-        var timeDisp = this.add.sprite(this.world.centerX - 150, this.world.centerY - 7, 'timeDisp'); // Where img displays on screen
-        timeDisp.anchor.setTo(0.5, 0.5); // Centers the origin
+		var myBackground = this.add.sprite(0, 0, 'mainBG');
+        myBackground.anchor.setTo(0, 0);
+        logo = this.add.sprite(40, 40, 'titleLogo');
+        logo.anchor.setTo(0, 0);
         
         
         //Add button
@@ -34,8 +24,8 @@ gameObj.Loser.prototype = {
 
 		var myStyle = { width: "150px", font: "50px Freckle Face", fill: "black", align: "left"};
 
-		var myScore = this.add.text(this.world.centerX+70,this.world.centerY-25, scoreText, myStyle );
-        var myTime = this.add.text(this.world.centerX-180,this.world.centerY-25, timeText, myStyle );
+		var myScore = this.add.text(50,200, scoreText, myStyle );
+        var myTime = this.add.text(50,270, timeText, myStyle );
 		           
 		
 	},
