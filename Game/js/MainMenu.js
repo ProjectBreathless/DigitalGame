@@ -10,6 +10,11 @@ gameObj.MainMenu.prototype = {
     playBtn = this.add.button(this.world.centerX, this.world.centerY-5, 'playBtn', this.startGame, this, 1, 0, 2);
     playBtn.anchor.setTo(0.5, 0.5);
         
+    player = this.add.sprite(100, 300, 'Aria', 7);
+    player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true); 
+    //player.animations.add('turn', [4], 20, true);
+    player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
+        
 	},
     
     

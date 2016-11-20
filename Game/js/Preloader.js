@@ -7,6 +7,7 @@ gameObj.Preloader.prototype = {
         //Main Menu
         this.load.image('mainBG', 'imgs/titleScreen.png');
         this.load.spritesheet('playBtn', 'imgs/titlePlay.png', 224, 100);
+        this.load.spritesheet('titleShip', 'imgs/titleShip.png', 224, 100);
         
         //Level 1
         this.load.tilemap('map', 'levels/mwagar_tiles.json', null, Phaser.Tilemap.TILED_JSON);

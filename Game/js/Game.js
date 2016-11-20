@@ -352,6 +352,7 @@ gameObj.Game.prototype = {
         }
     },
     endTimer: function() {
+        this.gameOver();
         // Stop the timer when the delayed event triggers
         timer.stop();
     },
@@ -360,6 +361,9 @@ gameObj.Game.prototype = {
         var minutes = "0" + Math.floor(s / 60);
         var seconds = "0" + (s - minutes * 60);
         return minutes.substr(-2) + ":" + seconds.substr(-2);   
+    },
+    gameOver: function() {
+        this.game.state.start('Loser');
     },
     //Nuetralizes all input from the player
     shutdown: function () {    
