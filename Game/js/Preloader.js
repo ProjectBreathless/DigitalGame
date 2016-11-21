@@ -28,6 +28,8 @@ gameObj.Preloader.prototype = {
         
         this.load.spritesheet('rocketParticles', 'levels/rocketParticle_spritesheet.png', 8, 8);
         
+        this.load.audio('musicBG', 'sound/Endorphine_-_148_-_Et_de_rduire_en_miettes_ces_monuments_cut.mp3');
+        
 	},
 	create: function() {
 		// Comment out the line below to check preloader animation

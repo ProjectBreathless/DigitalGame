@@ -17,6 +17,8 @@ gameObj.Game = function (game) {
     var min;
     var sec;
     var rocketReady;
+    
+    var music;
 };
 
 gameObj.Game.prototype = {
@@ -164,6 +166,9 @@ gameObj.Game.prototype = {
         
         rocketReady = true;
         
+        music = this.add.audio('musicBG');
+        music.play();
+        
         // Create the timer
         timer = this.game.time.create();
         
@@ -175,7 +180,7 @@ gameObj.Game.prototype = {
         
         // Start the timer
         timer.start();
-
+        
     },
 
     update: function () {
