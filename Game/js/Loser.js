@@ -24,8 +24,8 @@ gameObj.Loser.prototype = {
 
 		var myStyle = { width: "150px", font: "100px VT323", fill: "black", align: "left"};
 
-		var myScore = this.add.text(50,200, scoreText, myStyle );
-        var myTime = this.add.text(50,290, timeText, myStyle );
+		var myScore = this.add.text(50,200, "Score: " + scoreText, myStyle );
+        //var myTime = this.add.text(50,290, timeText, myStyle );
 		           
 		
 	},

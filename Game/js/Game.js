@@ -49,7 +49,12 @@ gameObj.Game.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(75, 820, 'door');
+        door = this.add.sprite(1000, 310, 'door');
+        //door.animations.add('closed', [0], 20, true);
+        door.animations.add('open', [1, 2, 3, 4, 5], 12, true);
+        this.game.physics.arcade.enable(door);
+        door.body.collideWorldBounds = true;
+        
 
         player = this.add.sprite(100, 300, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
@@ -74,7 +79,7 @@ gameObj.Game.prototype = {
         // player.body.friction = 0.5;
         
         var xPositions = [300, 325, 350, 375];
-        var yPositions = [200, 300, 150, 200];
+        var yPositions = [200, 300, 225, 200];
         
         
         
@@ -173,6 +178,7 @@ gameObj.Game.prototype = {
     update: function () {
 
         this.game.physics.arcade.collide(player, layer);
+        this.game.physics.arcade.collide(door, layer);
         this.game.physics.arcade.collide(crystals,layer);
         this.game.physics.arcade.collide(fuelPacks, layer);
         this.game.physics.arcade.collide(airPacks, layer);
@@ -216,7 +222,7 @@ gameObj.Game.prototype = {
                 
         }
         
-        
+        //door.animations.play('closed');
 
         if (a.isDown && player.body.onFloor()) {
             if (player.body.velocity.x > -player.body.maxSpeed) {
@@ -304,6 +310,7 @@ gameObj.Game.prototype = {
         this.physics.arcade.overlap(player, crystals, this.collectCrystal, null, this);
         this.physics.arcade.overlap(player, airPacks, this.collectAir, null, this);
         this.physics.arcade.overlap(player, fuelPacks, this.collectFuel, null, this);
+        this.physics.arcade.overlap(player, door, this.Win, null, this);
         //this.physics.arcade.collide(player, crystals, this.collect, null, this);
         //crystals.imovable = true;
 
@@ -374,6 +381,9 @@ gameObj.Game.prototype = {
 	   }    
 	        
     },
+    Win: function(){
+        this.game.state.start('Loser');
+    }
 
 };
 
