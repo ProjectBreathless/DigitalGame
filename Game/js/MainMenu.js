@@ -10,6 +10,9 @@ gameObj.MainMenu.prototype = {
     logo = this.add.sprite(this.world.centerX, 40, 'titleLogo');
     logo.anchor.setTo(0.5, 0);
         
+    music = this.add.audio('musicMainMenu');
+    music.play();
+        
     playBtn = this.add.button(this.world.centerX, this.world.centerY-5, 'playBtn', this.startGame, this, 1, 0, 2);
     playBtn.anchor.setTo(0.5, 0.5);
         
@@ -26,6 +29,7 @@ gameObj.MainMenu.prototype = {
     
 
 	startGame: function() {
+        music.stop();
 		this.game.state.start('Game');
 	},
     

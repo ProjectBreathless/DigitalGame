@@ -166,7 +166,7 @@ gameObj.Game.prototype = {
         
         rocketReady = true;
         
-        music = this.add.audio('musicBG');
+        music = this.add.audio('musicInGame');
         music.play();
         
         // Create the timer
