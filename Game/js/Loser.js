@@ -22,10 +22,10 @@ gameObj.Loser.prototype = {
 		var scoreText = score;
         var timeText = 0;
 
-		var myStyle = { width: "150px", font: "50px VT323", fill: "black", align: "left"};
+		var myStyle = { width: "150px", font: "100px VT323", fill: "black", align: "left"};
 
 		var myScore = this.add.text(50,200, scoreText, myStyle );
-        var myTime = this.add.text(50,270, timeText, myStyle );
+        var myTime = this.add.text(50,290, timeText, myStyle );
 		           
 		
 	},
