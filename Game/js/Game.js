@@ -168,7 +168,7 @@ gameObj.Game.prototype = {
         timer = this.game.time.create();
         
         min = 0;
-        sec = 20;
+        sec = 5;
         
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
@@ -351,8 +351,8 @@ gameObj.Game.prototype = {
     collectAir: function(player, airPacks) 
     {
         console.log("Air!");
+        sec = (timerEvent.delay - timer.ms)/1000 + 5;
         timer.stop();
-        sec = sec + 5;
         console.log(sec);
         //timer.remove(timerEvent);
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
