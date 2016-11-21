@@ -48,7 +48,7 @@ gameObj.Game.prototype = {
         facing = 'right';
         jumpTimer = 0;
         
-        door = this.add.sprite(1000, 310, 'door');
+        door = this.add.sprite(1300, 182, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -80,8 +80,8 @@ gameObj.Game.prototype = {
         player.body.rocketJump = true;
         // player.body.friction = 0.5;
         
-        var xPositions = [300, 325, 350, 375];
-        var yPositions = [200, 300, 225, 200];
+        var xCryPositions = [350, 585, 875, 875, 1100];//, 325, 350, 375];
+        var yCryPositions = [400, 300, 425, 75, 125];//, 300, 225, 200];
         
         
         
@@ -91,40 +91,41 @@ gameObj.Game.prototype = {
         crystals.enableBody = true;
         crystals.physicsBodyType = Phaser.Physics.ARCADE;
         
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < xCryPositions.length; i++)
         {
-            var c = crystals.create(xPositions[i], yPositions[i], 'crystal');
+            var c = crystals.create(xCryPositions[i], yCryPositions[i], 'crystal');
             c.name = "crys" + i;
             c.body.velocity[1] = 0;
             c.body.immovable = true;
         }
         
+        var xAirPositions = [350, 585];
+        var yAirPositions = [225, 200];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
-        for (var i = 0; i < 4; i++)
+        for (var i = 0; i < xAirPositions.length; i++)
         {
-            var f = airPacks.create(xPositions[i], yPositions[i], 'air');
+            var f = airPacks.create(xAirPositions[i], yAirPositions[i], 'air');
             f.name = "air" + i;
             f.body.velocity[1] = 0;
             f.body.immovable = true;
             f.body.gravity.y = 1750;
         }
         
-        var fuelXPositions = [490, 900, 630];
-        var fuelYPositions = [200, 750, 850];
+        var fuelXPositions = [875];//, 900, 630];
+        var fuelYPositions = [450];//750, 850];
         
         fuelPacks = this.game.add.group();
         fuelPacks.enableBody = true;
         fuelPacks.physicsBodyType = Phaser.Physics.ARCADE;
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < fuelXPositions.length; i++)
         {
-            var e = fuelPacks.create((fuelXPositions[i] + 100), (fuelYPositions[i] - 50), 'fuel');
+            var e = fuelPacks.create(fuelXPositions[i], fuelYPositions[i], 'fuel');
             e.name = "fuel" + i;
             e.body.velocity[1] = 0;
-            if(i != 1){
-                e.body.gravity.y = 1750
-            }
+            e.body.gravity.y = 1750;
+        
             
             e.body.immovable = true;
         }
