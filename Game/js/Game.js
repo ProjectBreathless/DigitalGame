@@ -56,7 +56,7 @@ gameObj.Game.prototype = {
         door.body.collideWorldBounds = true;
         
 
-        player = this.add.sprite(100, 300, 'Aria', 7);
+        player = this.add.sprite(100, 415, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         //player.animations.add('turn', [4], 20, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
@@ -260,46 +260,63 @@ gameObj.Game.prototype = {
             if (facing != 'idle') {
                 player.animations.stop();
 
-                if (facing == 'left') {
-                    player.frame = 6;
+                if (facing == 'right') {
+                    player.frame = 7;
                 }
                 else {
-                    player.frame = 7;
+                    player.frame = 6;
                 }
 
                 facing = 'idle';
             }
         }
         /* if in air: */
-        else if (a.isDown) {
+        else if (a.isDown && !player.body.onFloor()) {
 
             if (player.body.velocity.x > -player.body.maxSpeed) {
                 player.body.velocity.x -= player.body.acceleration * player.body.aerialAcceleration;
             } else {
                 player.body.velocity.x = -player.body.maxSpeed
             }
+            
+            facing = 'left';
 
-            if (facing != 'left') {
-                player.animations.play('left');
-                facing = 'left';
-            }
         }
-        else if (d.isDown) {
+        else if (d.isDown && !player.body.onFloor()) {
             /*Gives player opportunity to change directions, even in air*/
             if (player.body.velocity.x < player.body.maxSpeed) {
                 player.body.velocity.x += player.body.acceleration * player.body.aerialAcceleration;
             } else {
                 player.body.velocity.x = player.body.maxSpeed
             }
+            
+            facing = 'right';
 
-            if (facing != 'right') {
-                player.animations.play('right');
-                facing = 'right';
-            }
         }
 
         if (w.isDown && player.body.onFloor()) {
             player.body.velocity.y = -600;
+        }
+        
+        if (!player.body.onFloor() & player.body.velocity.y <= 0) {
+            if (facing == 'right' | facing == 'idle') {
+                player.frame = 14;
+                facing = 'right';
+            }
+            else if (facing == 'left') {
+                player.frame = 15;
+                facing = 'left';
+            }
+        }
+        else if (!player.body.onFloor() & player.body.velocity.y > 0) {
+            if (facing == 'right' | facing == 'idle') {
+                player.frame = 9;
+                facing = 'right';
+            }
+            else if (facing == 'left') {
+                player.frame = 4;
+                facing = 'left';
+            }
         }
 
         // if (w.isDown) && this.time.now > jumpTimer && this.checkIfCanJump()) {
