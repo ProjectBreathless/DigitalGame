@@ -150,7 +150,7 @@ gameObj.Game.prototype = {
         
         score = 0;
         
-        treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px Arial", fill: "#ffffff", align: "left" });
+        treasure = this.add.text(32, 575, 'Treasure: ' + score.toString(), { font: "20px VT323", fill: "#ffffff", align: "left" });
         treasure.fixedToCamera = true;
         treasure.cameraOffset.setTo(10, 550);
         
@@ -313,7 +313,7 @@ gameObj.Game.prototype = {
 
     },
     collectCrystal: function(player, crystals) 
-    {
+    {   
         console.log("Treasure!");
         score++
         console.log("Treasure! = " + score);
