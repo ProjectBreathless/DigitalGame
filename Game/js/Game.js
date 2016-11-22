@@ -17,6 +17,8 @@ gameObj.Game = function (game) {
     var min;
     var sec;
     var rocketReady;
+    var doubleJump;
+    
     
     var music;
 };
@@ -155,8 +157,11 @@ gameObj.Game.prototype = {
 
         cursors = this.input.keyboard.createCursorKeys();
         a = this.game.input.keyboard.addKey(Phaser.Keyboard.A)
+        w = this.game.input.keyboard.addKey(Phaser.Keyboard.W)
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D)
         space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+        
+        
         
         score = 0;
         
@@ -165,6 +170,7 @@ gameObj.Game.prototype = {
         treasure.cameraOffset.setTo(10, 550);
         
         rocketReady = true;
+        doubleJump = false;
         
         music = this.add.audio('musicInGame');
         music.loopFull();
@@ -192,6 +198,17 @@ gameObj.Game.prototype = {
         this.game.physics.arcade.collide(airPacks, layer);
         this.game.physics.arcade.collide(emitter, layer);
         
+        //RocketJump
+        if(rocketReady)
+        {
+            if(cursors.left.isDown)
+            {
+                player.body.velocity.x = 0;
+                player.body.velocity.x -= 700;
+                rocketReady = false;
+            }
+        }
+        /**
         //Rocket Jump
         if(rocketReady){
             if (this.game.input.activePointer.leftButton.isDown && !player.body.onFloor() && player.body.rocketJump) {
@@ -206,7 +223,7 @@ gameObj.Game.prototype = {
 
 
 
-                /*particle effect */
+                //particle effect
                 emitter.x = player.x;
                 emitter.y = player.y;
                 var t = this;
@@ -229,7 +246,7 @@ gameObj.Game.prototype = {
             }
                 
         }
-        
+        **/
         //door.animations.play('closed');
 
         if (a.isDown && player.body.onFloor()) {
@@ -303,6 +320,7 @@ gameObj.Game.prototype = {
         }
 
         if (space.isDown && player.body.onFloor()) {
+            doubleJump = true;
             player.body.velocity.y = -600;
         }
         
@@ -411,7 +429,7 @@ gameObj.Game.prototype = {
         if(door.frame != 6) {
             door.animations.play('open');
         }
-        if(space.isDown && player.body.onFloor()) {
+        if(w.isDown && player.body.onFloor()) {
             this.game.state.start('Loser');
         }
     }
