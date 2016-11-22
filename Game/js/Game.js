@@ -20,7 +20,15 @@ gameObj.Game = function (game) {
     var doubleJump;
     
     
+    var crystalFx;
+    var aircapsuleFx;
+    var doorFx;
+    
+    var doorFxPlay;
+    
     var music;
+    var alarm;
+    
 };
 
 gameObj.Game.prototype = {
@@ -172,8 +180,17 @@ gameObj.Game.prototype = {
         rocketReady = true;
         doubleJump = false;
         
+        crystalFx = this.add.audio('crystalFx');
+        aircapsuleFx = this.add.audio('aircapsuleFx');
+        doorFx = this.add.audio('doorFx');
+        
+        doorFxPlay = 0;
+        
         music = this.add.audio('musicInGame');
         music.loopFull();
+        alarm = this.add.audio('alarm');
+        alarm.loopFull();
+        alarm.volume = 0.35;
         
         // Create the timer
         timer = this.game.time.create();
@@ -366,6 +383,7 @@ gameObj.Game.prototype = {
     {   
         console.log("Treasure!");
         score++
+        crystalFx.play();
         console.log("Treasure! = " + score);
         treasure.setText("Treasure: " + score);
         //remove sprite
@@ -376,6 +394,7 @@ gameObj.Game.prototype = {
         console.log("Air!");
         sec = (timerEvent.delay - timer.ms)/1000 + 5;
         timer.stop();
+        aircapsuleFx.play();
         console.log(sec);
         //timer.remove(timerEvent);
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
@@ -426,6 +445,10 @@ gameObj.Game.prototype = {
     },
     Win: function(){
         
+        if(doorFxPlay == 0) {
+        	doorFx.play();
+        	doorFxPlay++;
+    	}
         if(door.frame != 6) {
             door.animations.play('open');
         }

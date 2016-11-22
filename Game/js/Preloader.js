@@ -30,6 +30,10 @@ gameObj.Preloader.prototype = {
         
         this.load.audio('musicInGame', 'sound/RoccoW_-_06_-_Pumped.mp3');
         this.load.audio('musicMainMenu', 'sound/Visager_-_15_-_Epilogue.mp3');
+        this.load.audio('crystalFx', 'sound/Cut Audio Files/27568__suonho__memorymoon-space-blaster-plays_cut_cut.wav');
+        this.load.audio('aircapsuleFx', 'sound/Cut Audio Files/6110__twistedlemon__cola-bottle_cut.wav');
+        this.load.audio('doorFx', 'sound/Cut Audio Files/123253__skullsmasha__mechanicalclamp_cut.wav');
+        this.load.audio('alarm', 'sound/Attribution Noncommercial License Items/39514__syna-max__alarm-of-d00m.wav');
         
 	},
 	create: function() {
