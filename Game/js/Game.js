@@ -156,7 +156,7 @@ gameObj.Game.prototype = {
         cursors = this.input.keyboard.createCursorKeys();
         a = this.game.input.keyboard.addKey(Phaser.Keyboard.A)
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D)
-        w = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+        space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
         
         score = 0;
         
@@ -302,7 +302,7 @@ gameObj.Game.prototype = {
 
         }
 
-        if (w.isDown && player.body.onFloor()) {
+        if (space.isDown && player.body.onFloor()) {
             player.body.velocity.y = -600;
         }
         
@@ -327,7 +327,7 @@ gameObj.Game.prototype = {
             }
         }
 
-        // if (w.isDown) && this.time.now > jumpTimer && this.checkIfCanJump()) {
+        // if (space.isDown) && this.time.now > jumpTimer && this.checkIfCanJump()) {
         //     player.body.moveUp(500);
         //     jumpTimer = this.time.now + 750;
         // }
@@ -411,7 +411,7 @@ gameObj.Game.prototype = {
         if(door.frame != 6) {
             door.animations.play('open');
         }
-        if(w.isDown && player.body.onFloor()) {
+        if(space.isDown && player.body.onFloor()) {
             this.game.state.start('Loser');
         }
     }
