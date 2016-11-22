@@ -25,6 +25,7 @@ gameObj.Game = function (game) {
     var doorFxPlay;
     
     var music;
+    var alarm;
     
 };
 
@@ -181,6 +182,9 @@ gameObj.Game.prototype = {
         
         music = this.add.audio('musicInGame');
         music.loopFull();
+        alarm = this.add.audio('alarm');
+        alarm.loopFull();
+        alarm.volume = 0.35;
         
         // Create the timer
         timer = this.game.time.create();
