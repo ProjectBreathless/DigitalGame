@@ -156,7 +156,7 @@ gameObj.Game.prototype = {
         cursors = this.input.keyboard.createCursorKeys();
         a = this.game.input.keyboard.addKey(Phaser.Keyboard.A)
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D)
-        w = this.game.input.keyboard.addKey(Phaser.Keyboard.W)
+        w = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
         
         score = 0;
         
