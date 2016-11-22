@@ -18,7 +18,14 @@ gameObj.Game = function (game) {
     var sec;
     var rocketReady;
     
+    var crystalFx;
+    var aircapsuleFx;
+    var doorFx;
+    
+    var doorFxPlay;
+    
     var music;
+    
 };
 
 gameObj.Game.prototype = {
@@ -165,6 +172,12 @@ gameObj.Game.prototype = {
         treasure.cameraOffset.setTo(10, 550);
         
         rocketReady = true;
+        
+        crystalFx = this.add.audio('crystalFx');
+        aircapsuleFx = this.add.audio('aircapsuleFx');
+        doorFx = this.add.audio('doorFx');
+        
+        doorFxPlay = 0;
         
         music = this.add.audio('musicInGame');
         music.loopFull();
@@ -348,6 +361,7 @@ gameObj.Game.prototype = {
     {   
         console.log("Treasure!");
         score++
+        crystalFx.play();
         console.log("Treasure! = " + score);
         treasure.setText("Treasure: " + score);
         //remove sprite
@@ -358,6 +372,7 @@ gameObj.Game.prototype = {
         console.log("Air!");
         sec = (timerEvent.delay - timer.ms)/1000 + 5;
         timer.stop();
+        aircapsuleFx.play();
         console.log(sec);
         //timer.remove(timerEvent);
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
@@ -408,6 +423,10 @@ gameObj.Game.prototype = {
     },
     Win: function(){
         
+        if(doorFxPlay == 0) {
+        	doorFx.play();
+        	doorFxPlay++;
+    	}
         if(door.frame != 6) {
             door.animations.play('open');
         }
