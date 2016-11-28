@@ -24,7 +24,9 @@ gameObj.Game = function (game) {
 
     var crystalFx;
     var aircapsuleFx;
+    var fuelpodFx;
     var doorFx;
+    var jetpackFx;
 
     var doorFxPlay;
 
@@ -191,6 +193,8 @@ gameObj.Game.prototype = {
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
         doorFx = this.add.audio('doorFx');
+        fuelpodFx = this.add.audio('fuelpodFx');
+        jetpackFx = this.add.audio('jetpackFx');
 
         doorFxPlay = 0;
 
@@ -271,6 +275,7 @@ gameObj.Game.prototype = {
             else if ((rFuel == 0) && (rocketReady == true)) {
                 rocketReady = false;
             }
+            jetpackFx.play();
         }
         else if (!player.body.onFloor() && !(cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
             boost = false;
@@ -464,6 +469,8 @@ gameObj.Game.prototype = {
         rocketReady = true;
         HUDFuel.frame = 0;
         rFuel = 1;
+        fuelpodFx.play();
+        //remove sprite
         fuelPacks.destroy();
     },
     render: function () {
