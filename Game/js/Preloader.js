@@ -12,6 +12,11 @@ gameObj.Preloader.prototype = {
         this.load.spritesheet('titleShip', 'imgs/title/titleShip.png', 200, 82);
         this.load.spritesheet('titleText', 'imgs/title/titleText.png', 200, 100);
         
+        //HUD
+        this.load.image('timeInd', 'imgs/Time.png');
+        this.load.image('treasInd', 'imgs/Treasure.png');
+        this.load.spritesheet('Fuel_Ind', 'imgs/Fuel_Ind.png', 55, 55);
+        
         //Level 1
         this.load.tilemap('map', 'levels/IntroduceAir.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('Alien_Ship_Tileset', 'levels/32x32_tiles.png');
@@ -24,7 +29,6 @@ gameObj.Preloader.prototype = {
         this.load.image('crystal', 'levels/Crystal_Sprite_Small.png');
 		this.load.image('air', 'levels/Air_Capsule.png');
         this.load.image('fuel', 'levels/Fuel_Pod.png');
-
         
         this.load.spritesheet('rocketParticles', 'levels/rocketParticle_spritesheet.png', 8, 8);
         
@@ -34,6 +38,13 @@ gameObj.Preloader.prototype = {
         this.load.audio('aircapsuleFx', 'sound/Cut Audio Files/6110__twistedlemon__cola-bottle_cut.wav');
         this.load.audio('doorFx', 'sound/Cut Audio Files/123253__skullsmasha__mechanicalclamp_cut.wav');
         this.load.audio('alarm', 'sound/Attribution Noncommercial License Items/39514__syna-max__alarm-of-d00m.wav');
+        
+        //Win Screen
+        this.load.image('successSprite', 'imgs/Success_sprite.png');
+        this.load.image('replayBtn', 'imgs/Replay_button.png');
+        this.load.image('menuBtn', 'imgs/Menu_button.png');
+        this.load.image('tinystar', 'imgs/star2.png');
+
         
 	},
 	create: function() {

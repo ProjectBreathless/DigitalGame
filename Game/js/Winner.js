@@ -1,48 +1,113 @@
 gameObj.Winner = function(game) {};
 
+var distance = 300;
+var speed = 6;
+var star;
+var texture;
+
+var max = 400;
+var xx = [];
+var yy = [];
+var zz = [];
+
 gameObj.Winner.prototype = {
 	create: function() {
-		console.log("State - Winner");
-		//Add background image
-		var myLogo = this.add.sprite(this.world.centerX, this.world.centerY, 'winBg');
-		myLogo.anchor.setTo(0.5, 0.5);
-
-		//Add title image
-		var myBackground = this.add.sprite(this.world.centerX, this.world.centerY-250, 'winImg');
-		myBackground.anchor.setTo(0.5, 0.5);
-
-		//Add list graphics
+        console.log("State - Winner");
+    
         
-        var scoreDisp = this.add.sprite(this.world.centerX + 150, this.world.centerY - 0, 'scoreDisp'); // Where img displays on screen
-        scoreDisp.anchor.setTo(0.5, 0.5); // Centers the origin
-            
-        var timeDisp = this.add.sprite(this.world.centerX - 150, this.world.centerY - 7, 'timeDisp'); // Where img displays on screen
-        timeDisp.anchor.setTo(0.5, 0.5); // Centers the origin
+        //Add "Success" sprite
+        var successSprite = this.add.sprite(60, 30, 'successSprite');
+        successSprite.anchor.setTo(0, 0);
         
+        //Add Buttons
+        replayBtn = this.add.button(400, this.world.centerY+20, 'replayBtn', this.startGame, this, 1, 0, 2);
+        replayBtn.anchor.setTo(0.5, 0.5);
         
-        //Add button
-		// The numbers given in parameters are the indexes of the frames, in this order: over, out, down 
-        var replay = this.add.button(this.world.centerX - 90, this.world.centerY + 200, 'againBtn', this.startGame, this, 1, 0, 2);
-		replay.anchor.setTo(0, 0.5);
-		
-		var close = this.add.button(this.world.centerX - 110, this.world.centerY + 200, 'closeBtn', this.mainScreen, this, 1, 0, 2);
-		close.anchor.setTo(1, 0.5);
+        menuBtn = this.add.button(800, this.world.centerY+20, 'menuBtn', this.mainScreen, this, 1, 0, 2);
+        menuBtn.anchor.setTo(0.5, 0.5);
 
-		//Add text
+        //Add Scores
+        
 		var scoreText = score;
-        var timeText = displayMin + ":" + displaySec;
+        var timeText = Math.round((timerEvent.delay - timer.ms) / 1000);
+        
+        var sText = this.add.text(850, 200, scoreText );
+        var tText = this.add.text(850, 290, timeText + " Seconds" );
+        
+        sText.font = "VT323";
+        sText.fontSize = 55;
+        sText.stroke = "#ec2fe6";
+        sText.strokeThickness = 4;
+        sText.fill = "#a511a0";
+        sText.align = "left";
+        
+        tText.font = "VT323";
+        tText.fontSize = 55;
+        tText.stroke = "#43caf7";
+        tText.strokeThickness = 4;
+        tText.fill = "#696969";
+        tText.align = "left";
 
-		var myStyle = { width: "150px", font: "50px Freckle Face", fill: "black", align: "left"};
+		var myScore = this.add.text(80, 200, "Crystals Found\t\t -  -  -  -  -");
+        var myTime = this.add.text(80, 290, "Air Remaining\t\t\t -  -  -  -  -");
+        
+        myScore.font = "VT323";
+        myScore.fontSize = 55;
+        myScore.stroke = "#ec2fe6";
+        myScore.strokeThickness = 4;
+        myScore.fill = "#a511a0";
+        myScore.align = "left";
+                
+        myTime.font = "VT323";
+        myTime.fontSize = 55;
+        myTime.stroke = "#43caf7";
+        myTime.strokeThickness = 4;
+        myTime.fill = "#696969";
+        myTime.align = "left";
+        
+        //Star background
+        star = this.make.sprite(0, 0, 'tinystar');
+        texture = this.add.renderTexture(this.world._width, this.world._height, 'texture');
 
-		var myScore = this.add.text(this.world.centerX+60,this.world.centerY-25, scoreText, myStyle );
-        var myTime = this.add.text(this.world.centerX-160,this.world.centerY-25, timeText, myStyle );
-		           
+        this.add.sprite(0, 0, texture);
+
+        for (var i = 0; i < max; i++)
+        {
+            xx[i] = Math.floor(Math.random() * this.world._width) - (this.world._width/2);
+            yy[i] = Math.floor(Math.random() * this.world._height) - (this.world._height/2);
+            zz[i] = Math.floor(Math.random() * 1700) - 100;
+        }
+        
+    },
+
+    update: function() {
+
+        texture.clear();
+
+        for (var i = 0; i < max; i++)
+        {
+            var perspective = distance / (distance - zz[i]);
+            var x = this.world.centerX + xx[i] * perspective;
+            var y = this.world.centerY + yy[i] * perspective;
+
+            zz[i] += speed;
+
+            if (zz[i] > 300)
+            {
+                zz[i] -= 600;
+            }
+
+            texture.renderXY(star, x, y);
+        }
+
+    },
 		
-	},
 	startGame: function() {
+        music.stop();
 		this.game.state.start('Game');
 	},
     mainScreen: function() {
-		this.game.state.start('MainMenu');
+        music.stop();
+		this.game.state.start('Boot');
 	}
 };
