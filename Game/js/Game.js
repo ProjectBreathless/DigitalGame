@@ -22,6 +22,7 @@ gameObj.Game = function (game) {
 
     var crystalFx;
     var aircapsuleFx;
+    var fuelpodFx;
     var doorFx;
 
     var doorFxPlay;
@@ -180,6 +181,7 @@ gameObj.Game.prototype = {
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
         doorFx = this.add.audio('doorFx');
+        fuelpodFx = this.add.audio('fuelpodFx');
 
         doorFxPlay = 0;
 
@@ -404,6 +406,7 @@ gameObj.Game.prototype = {
     collectFuel: function (player, fuelPacks) {
         console.log("Fuel!");
         rocketReady = true;
+        fuelpodFx.play();
         //remove sprite
         fuelPacks.destroy();
     },
