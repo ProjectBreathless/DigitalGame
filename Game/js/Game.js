@@ -496,6 +496,7 @@ gameObj.Game.prototype = {
         return minutes.substr(-2) + ":" + seconds.substr(-2);
     },
     gameOver: function () {
+    	alarm.stop();
         this.game.state.start('Loser');
     },
     //Nuetralizes all input from the player
