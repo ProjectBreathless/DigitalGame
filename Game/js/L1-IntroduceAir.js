@@ -187,9 +187,9 @@ gameObj.L1.prototype = {
         //treasure.cameraOffset.setTo(10, 550);
 
         rocketReady = false;
-        rFuel = 0;
         doubleJump = false;
-
+        holdRocket = false;
+        
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
         doorFx = this.add.audio('doorFx');
@@ -203,7 +203,7 @@ gameObj.L1.prototype = {
         music.volume = 0.35;
         alarm = this.add.audio('alarm');
         alarm.loopFull();
-        alarm.volume = 0.35;
+        alarm.volume = 0.2;
 
         // Create the timer
         timer = this.game.time.create();

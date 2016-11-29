@@ -187,8 +187,8 @@ gameObj.L4.prototype = {
         //treasure.cameraOffset.setTo(10, 550);
 
         rocketReady = false;
-        rFuel = 0;
         doubleJump = false;
+        holdRocket = false;
 
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
@@ -516,6 +516,7 @@ gameObj.L4.prototype = {
             timer.pause();
         }
         if (door.frame == 6) {
+            alarm.stop();
             this.game.state.start('Winner');
         }
     }
