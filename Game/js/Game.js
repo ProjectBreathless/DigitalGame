@@ -516,7 +516,8 @@ gameObj.Game.prototype = {
         if (door.frame != 6) {
             door.animations.play('open');
         }
-        if (w.isDown && player.body.onFloor()) {
+        if (door.frame = 6 && player.body.onFloor()) {
+            player.destroy();
             alarm.stop();
             this.game.state.start('Winner');
         }
