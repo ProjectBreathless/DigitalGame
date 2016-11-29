@@ -70,6 +70,7 @@ gameObj.Game.prototype = {
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
+        door.body.setSize(20, 20, 30, 30);
         door.body.collideWorldBounds = true;
 
         //door = this.game.add.group();
@@ -515,7 +516,8 @@ gameObj.Game.prototype = {
         if (door.frame != 6) {
             door.animations.play('open');
         }
-        if (w.isDown && player.body.onFloor()) {
+        if (door.frame = 6 && player.body.onFloor()) {
+            player.destroy();
             alarm.stop();
             this.game.state.start('Winner');
         }
