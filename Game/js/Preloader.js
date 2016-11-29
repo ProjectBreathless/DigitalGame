@@ -18,7 +18,7 @@ gameObj.Preloader.prototype = {
         this.load.spritesheet('Fuel_Ind', 'imgs/Fuel_Ind.png', 55, 55);
         
         //Level 1
-        this.load.tilemap('map', 'levels/IntroduceAir.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('map', 'levels/level3.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('Alien_Ship_Tileset', 'levels/32x32_tiles.png');
         //this.load.image('walls_1x2', 'levels/walls_1x2.png');
         //this.load.image('tiles2', 'levels/tiles2.png');
