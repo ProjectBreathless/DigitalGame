@@ -37,7 +37,7 @@ gameObj.Preloader.prototype = {
         this.load.audio('crystalFx', 'sound/Cut Audio Files/27568__suonho__memorymoon-space-blaster-plays_cut_cut.wav');
         this.load.audio('aircapsuleFx', 'sound/Cut Audio Files/6110__twistedlemon__cola-bottle_cut_cut.wav');
         this.load.audio('doorFx', 'sound/Cut Audio Files/123253__skullsmasha__mechanicalclamp_cut.wav');
-        this.load.audio('alarm', 'sound/Attribution Noncommercial License Items/39514__syna-max__alarm-of-d00m.wav');
+        this.load.audio('alarm', 'sound/39514__syna-max__alarm-of-d00m_silence.wav');
         this.load.audio('fuelpodFx', 'sound/30935__aust-paul__possiblelazer.wav');
         this.load.audio('jetpackFx', 'sound/Cut Audio Files/36847__ecodtr__laserrocket2_cut_cut.wav');
         
