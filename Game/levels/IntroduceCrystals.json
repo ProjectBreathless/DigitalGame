@@ -19,11 +19,11 @@
         {
          "columns":3,
          "firstgid":1,
-         "image":"..\/..\/Sprites\/basicEnvironment.png",
+         "image":"..\/..\/Sprites\/Alien_Ship_Tileset.png",
          "imageheight":96,
          "imagewidth":96,
          "margin":0,
-         "name":"Basic Environment",
+         "name":"Alien_Ship_Tileset",
          "spacing":0,
          "tilecount":9,
          "tileheight":32,

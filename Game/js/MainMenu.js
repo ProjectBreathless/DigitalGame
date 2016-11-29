@@ -12,6 +12,7 @@ gameObj.MainMenu.prototype = {
         
     music = this.add.audio('musicMainMenu');
     music.play();
+    music.volume = 0.5;
         
     playBtn = this.add.button(600, 350, 'playBtn', this.startGame, this, 1, 0, 2);
     playBtn.anchor.setTo(0.5, 0.5);
@@ -30,7 +31,7 @@ gameObj.MainMenu.prototype = {
 
 	startGame: function() {
         music.stop();
-		this.game.state.start('Game');
+		this.game.state.start('L1');
 	},
     
     instructOne: function() {
