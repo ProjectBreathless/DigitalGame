@@ -30,9 +30,11 @@ gameObj.Loser.prototype = {
 		
 	},
 	startGame: function() {
+		music.stop();
 		this.game.state.start('Game');
 	},
     mainScreen: function() {
+    	music.stop();
 		this.game.state.start('MainMenu');
 	}
 };

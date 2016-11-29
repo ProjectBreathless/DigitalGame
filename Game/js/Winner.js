@@ -10,10 +10,13 @@ var xx = [];
 var yy = [];
 var zz = [];
 
+var bgGroup;
+
 gameObj.Winner.prototype = {
 	create: function() {
         console.log("State - Winner");
-    
+        
+        bgGroup = this.game.add.group();
         
         //Add "Success" sprite
         var successSprite = this.add.sprite(60, 30, 'successSprite');
@@ -78,9 +81,19 @@ gameObj.Winner.prototype = {
             zz[i] = Math.floor(Math.random() * 1700) - 100;
         }
         
+        bgGroup.add(successSprite);
+        bgGroup.add(replayBtn);
+        bgGroup.add(menuBtn);
+        bgGroup.add(sText);
+        bgGroup.add(tText);
+        bgGroup.add(myScore);
+        bgGroup.add(myTime);
+        
     },
 
     update: function() {
+        
+        this.game.world.bringToTop(bgGroup);
 
         texture.clear();
 
