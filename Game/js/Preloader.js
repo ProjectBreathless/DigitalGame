@@ -3,6 +3,15 @@ gameObj.Preloader = function(game) {};
 gameObj.Preloader.prototype = {
 	preload: function() {
 		console.log("State - preload");
+        
+        this.game.stage.backgroundColor = '#000';
+
+		// Preloader bar animation code
+		this.preloadBg = this.add.sprite((1200-297)/2, (600-145)/2, 'preloaderBg'); // Use the canvas sizing and image sizing
+		this.preloadBar = this.add.sprite((1200-158)/2, (600-50)/2, 'preloaderBar');
+		this.load.setPreloadSprite(this.preloadBar);
+        
+        
 		
         //Main Menu
         this.load.image('mainBG', 'imgs/title/titleScreen.png');
