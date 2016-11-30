@@ -44,6 +44,9 @@ gameObj.Preloader.prototype = {
         this.load.audio('fuelpodFx', 'sound/30935__aust-paul__possiblelazer.wav');
         this.load.audio('jetpackFx', 'sound/Cut Audio Files/36847__ecodtr__laserrocket2_cut_cut.wav');
         
+        //Fade Screen
+        this.load.image('BlackScreen', 'imgs/BlackScreen.png');
+        
         //Win Screen
         this.load.image('successSprite', 'imgs/Success_sprite.png');
         this.load.image('replayBtn', 'imgs/Replay_button.png');
