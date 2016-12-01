@@ -535,7 +535,7 @@ gameObj.L1.prototype = {
             timer.pause();
         }
         if (door.frame == 6) {
-            this.game.state.start('L2');
+            this.game.state.start('L3');
         }
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
