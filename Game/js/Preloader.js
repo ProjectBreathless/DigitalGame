@@ -3,6 +3,15 @@ gameObj.Preloader = function(game) {};
 gameObj.Preloader.prototype = {
 	preload: function() {
 		console.log("State - preload");
+        
+        this.game.stage.backgroundColor = '#000';
+
+		// Preloader bar animation code
+		this.preloadBg = this.add.sprite((1200-297)/2, (600-145)/2, 'preloaderBg'); // Use the canvas sizing and image sizing
+		this.preloadBar = this.add.sprite((1200-158)/2, (600-50)/2, 'preloaderBar');
+		this.load.setPreloadSprite(this.preloadBar);
+        
+        
 		
         //Main Menu
         this.load.image('mainBG', 'imgs/title/titleScreen.png');
@@ -43,6 +52,9 @@ gameObj.Preloader.prototype = {
         this.load.audio('alarm', 'sound/39514__syna-max__alarm-of-d00m_silence.wav');
         this.load.audio('fuelpodFx', 'sound/30935__aust-paul__possiblelazer.wav');
         this.load.audio('jetpackFx', 'sound/Cut Audio Files/36847__ecodtr__laserrocket2_cut_cut.wav');
+        
+        //Fade Screen
+        this.load.image('BlackScreen', 'imgs/BlackScreen.png');
         
         //Win Screen
         this.load.image('successSprite', 'imgs/Success_sprite.png');

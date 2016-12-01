@@ -5,6 +5,7 @@ gameObj.L1 = function (game) {
     var jumpTimer = 0;
     var cursors;
     var boost;
+    
 
     var map;
     var layer;
@@ -214,12 +215,20 @@ gameObj.L1.prototype = {
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
 
-        // Start the timer
+        
+        //Fade in
+        var fadeIn = this.add.sprite(0, 0, 'BlackScreen');
+        fadeIn.alpha = 1;
+        var tweenIn = this.add.tween(fadeIn).to( { alpha: 0 }, 500, "Linear", true);
+        
         timer.start();
-
-    },
+        
+        
+    },    
 
     update: function () {
+        
+        
 
         this.game.physics.arcade.collide(player, layer);
         this.game.physics.arcade.collide(door, layer);
@@ -502,22 +511,23 @@ gameObj.L1.prototype = {
         }
 
     },
-    Win: function () {
-
+    Win: function () {        
+        
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6 && player.body.onFloor()) {
-            if (this.player) {
-                this.player.destroy();
-                this.player = null;
-            }
+        if (door.frame != 6 && player.body.onFloor()) { 
             door.animations.play('open');
             timer.pause();
         }
         if (door.frame == 6) {
             this.game.state.start('L3');
+        }
+        else{
+            var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
+            fadeOut.alpha = 0;
+            this.add.tween(fadeOut).to( { alpha: 1 }, 4000, "Linear", true);
         }
     }
 

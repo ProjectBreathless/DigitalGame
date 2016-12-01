@@ -214,6 +214,11 @@ gameObj.L2.prototype = {
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
 
+        
+        var fadeIn = this.add.sprite(0, 0, 'BlackScreen');
+        fadeIn.alpha = 1;
+        var tweenIn = this.add.tween(fadeIn).to( { alpha: 0 }, 500, "Linear", true);
+        
         // Start the timer
         timer.start();
 
@@ -510,6 +515,11 @@ gameObj.L2.prototype = {
                 this.player = null;
             }
             this.game.state.start('L3-IntroduceRocket');
+        }
+        else{
+            var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
+            fadeOut.alpha = 0;
+            this.add.tween(fadeOut).to( { alpha: 1 }, 4000, "Linear", true);
         }
     }
 
