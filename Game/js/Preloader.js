@@ -46,9 +46,12 @@ gameObj.Preloader.prototype = {
         
         //Win Screen
         this.load.image('successSprite', 'imgs/Success_sprite.png');
-        this.load.image('replayBtn', 'imgs/Replay_button.png');
-        this.load.image('menuBtn', 'imgs/Menu_button.png');
+        this.load.spritesheet('replayBtn', 'imgs/Replay_button.png', 208, 98);
+        this.load.spritesheet('menuBtn', 'imgs/Menu_button.png', 208, 98);
         this.load.image('tinystar', 'imgs/star2.png');
+        
+        //Lose Screen
+        this.load.image('failSprite', 'imgs/Failure_sprite.png');
 
         
 	},

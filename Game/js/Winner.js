@@ -117,10 +117,10 @@ gameObj.Winner.prototype = {
 		
 	startGame: function() {
         music.stop();
-		this.game.state.start('Game');
+		this.game.state.start('L1');
 	},
     mainScreen: function() {
         music.stop();
-		this.game.state.start('Boot');
+		this.game.state.start('MainMenu');
 	}
 };

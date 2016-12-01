@@ -66,7 +66,7 @@ gameObj.L4.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(1800, 70, 'door');
+        door = this.add.sprite(1800, 78, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -77,7 +77,7 @@ gameObj.L4.prototype = {
         //door.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        player = this.add.sprite(100, 300, 'Aria', 7);
+        player = this.add.sprite(200, 400, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
@@ -126,8 +126,8 @@ gameObj.L4.prototype = {
 
         
         //Air Capsules
-        var xAirPositions = [880];
-        var yAirPositions = [260];
+        var xAirPositions = [1000];
+        var yAirPositions = [660];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;

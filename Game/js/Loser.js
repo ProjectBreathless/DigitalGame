@@ -4,34 +4,49 @@ gameObj.Loser.prototype = {
 	create: function() {
 		console.log("State - Loser");
 		//Add background image
-		var myBackground = this.add.sprite(0, 0, 'mainBG');
-        myBackground.anchor.setTo(0, 0);
-        logo = this.add.sprite(40, 40, 'titleLogo');
-        logo.anchor.setTo(0, 0);
+		this.stage.backgroundColor = '#111';
         
+//        // Create the timer
+//        timer = this.game.time.create();
+//
+//        min = 0;
+//        sec = 10;
+//
+//        // Set the length of the timer
+//        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
+//
+//        // Start the timer
+//        timer.start();
+        
+        var failSprite = this.add.sprite(300, 50, 'failSprite');
+        failSprite.anchor.setTo(0, 0);
+        
+        failSprite.alpha = 0;
+        var tween = this.add.tween(failSprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 8000, true);
+        tween.yoyo(true, 1000);
         
         //Add button
 		// The numbers given in parameters are the indexes of the frames, in this order: over, out, down 
-        replayBtn = this.add.button(400, this.world.centerY+20, 'menuBtn', this.mainScreen, this, 1, 0, 2);
+        var replayBtn = this.add.button(200, this.world.centerY, 'replayBtn', this.mainScreen, this, 1, 0, 2);
         replayBtn.anchor.setTo(0.5, 0.5);
 		
-		var close = this.add.button(this.world.centerX - 110, this.world.centerY + 200, 'closeBtn', this.mainScreen, this, 1, 0, 2);
-		close.anchor.setTo(1, 0.5);
+		var menuBtn = this.add.button(1000, this.world.centerY, 'menuBtn', this.mainScreen, this, 1, 0, 2);
+		menuBtn.anchor.setTo(0.5, 0.5);
 
-		//Add text
-		var scoreText = score;
-        var timeText = 0;
-
-		var myStyle = { width: "150px", font: "100px VT323", fill: "black", align: "left"};
-
-		var myScore = this.add.text(50,200, "Score: " + scoreText, myStyle );
-        //var myTime = this.add.text(50,290, timeText, myStyle );
+//		//Add text
+//		var scoreText = score;
+//        var timeText = 0;
+//
+//		var myStyle = { width: "150px", font: "100px VT323", fill: "black", align: "left"};
+//
+//		var myScore = this.add.text(50,200, "Score: " + scoreText, myStyle );
+//        //var myTime = this.add.text(50,290, timeText, myStyle );
 		           
 		
 	},
 	startGame: function() {
 		music.stop();
-		this.game.state.start('Game');
+		this.game.state.start('L1');
 	},
     mainScreen: function() {
     	music.stop();
