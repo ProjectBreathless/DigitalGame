@@ -476,14 +476,27 @@ gameObj.L4.prototype = {
             this.game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 42, 46, "#333");
         }
         else {
-            this.game.debug.text("Done!", 2, 14, "#0f0");
-            shutdown();
+            this.game.debug.text("");
+            //shutdown();
         }
     },
     endTimer: function () {
-        this.gameOver();
+        //this.gameOver();
         // Stop the timer when the delayed event triggers
         timer.stop();
+        
+        var redFlash = this.add.sprite(0, 0, 'RedScreen');
+        redFlash.alpha = 0;
+        this.add.tween(redFlash).to( { alpha: 1 }, 200, "Linear", true);
+        redFlash.yoyo = (true, 1000);
+        
+        ltimer = this.game.time.create();
+        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 1, this.gameOver, this);
+        ltimer.start();
+        
+        var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
+        fadeOut.alpha = 0;
+        this.add.tween(fadeOut).to( { alpha: 1 }, 1000, "Linear", true);
     },
     formatTime: function (s) {
         // Convert seconds (s) to a nicely formatted and padded time string

@@ -55,6 +55,7 @@ gameObj.Preloader.prototype = {
         
         //Fade Screen
         this.load.image('BlackScreen', 'imgs/BlackScreen.png');
+        this.load.image('RedScreen', 'imgs/RedScreen.png');
         
         //Win Screen
         this.load.image('successSprite', 'imgs/Success_sprite.png');

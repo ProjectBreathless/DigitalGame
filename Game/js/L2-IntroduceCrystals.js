@@ -5,6 +5,7 @@ gameObj.L2 = function (game) {
     var jumpTimer = 0;
     var cursors;
     var boost;
+    
 
     var map;
     var layer;
@@ -13,14 +14,14 @@ gameObj.L2 = function (game) {
     var fuelPacks;
     var airPacks;
     var treasure;
-    var timer, timerEvent;
+    var timer, timerEvent, ltimer, loseEvent;
     var min;
     var sec;
     var rocketReady;
     var rFuel;
     var doubleJump;
     var maxSpeedY;
-
+    var holdRocket;
 
     var crystalFx;
     var aircapsuleFx;
@@ -40,7 +41,7 @@ gameObj.L2 = function (game) {
 gameObj.L2.prototype = {
 
     create: function () {
-        console.log("State - Game");
+        console.log("State - L2");
 
         this.game.input.mouse.capture = true;
 
@@ -66,7 +67,7 @@ gameObj.L2.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(6300, 2000, 'door');
+        door = this.add.sprite(1300, 182, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -77,7 +78,7 @@ gameObj.L2.prototype = {
         //door.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        player = this.add.sprite(1000, 1000, 'Aria', 7);
+        player = this.add.sprite(100, 550, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
@@ -126,8 +127,8 @@ gameObj.L2.prototype = {
 
         
         //Air Capsules
-        var xAirPositions = [875];
-        var yAirPositions = [200];
+        var xAirPositions = [880];
+        var yAirPositions = [260];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
@@ -136,7 +137,7 @@ gameObj.L2.prototype = {
             f.name = "air" + i;
             f.body.velocity[1] = 0;
             f.body.immovable = true;
-            f.body.gravity.y = 1750;
+            //f.body.gravity.y = 1750;
         }
 
         
@@ -151,7 +152,7 @@ gameObj.L2.prototype = {
             var e = fuelPacks.create(fuelXPositions[i], fuelYPositions[i], 'fuel');
             e.name = "fuel" + i;
             e.body.velocity[1] = 0;
-            e.body.gravity.y = 1750;
+            //e.body.gravity.y = 1750;
 
 
             e.body.immovable = true;
@@ -187,9 +188,9 @@ gameObj.L2.prototype = {
         //treasure.cameraOffset.setTo(10, 550);
 
         rocketReady = false;
-        rFuel = 0;
         doubleJump = false;
-
+        holdRocket = false;
+        
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
         doorFx = this.add.audio('doorFx');
@@ -198,12 +199,12 @@ gameObj.L2.prototype = {
 
         doorFxPlay = 0;
 
-//        music = this.add.audio('musicInGame');
-//        music.loopFull();
-//        music.volume = 0.5;
-//        alarm = this.add.audio('alarm');
-//        alarm.loopFull();
-//        alarm.volume = 0.35;
+        music = this.add.audio('musicInGame');
+        music.loopFull();
+        music.volume = 0.35;
+        alarm = this.add.audio('alarm');
+        alarm.loopFull();
+        alarm.volume = 0.2;
 
         // Create the timer
         timer = this.game.time.create();
@@ -215,16 +216,19 @@ gameObj.L2.prototype = {
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
 
         
+        //Fade in
         var fadeIn = this.add.sprite(0, 0, 'BlackScreen');
         fadeIn.alpha = 1;
         var tweenIn = this.add.tween(fadeIn).to( { alpha: 0 }, 500, "Linear", true);
         
-        // Start the timer
         timer.start();
-
-    },
+        
+        
+    },    
 
     update: function () {
+        
+        
 
         this.game.physics.arcade.collide(player, layer);
         this.game.physics.arcade.collide(door, layer);
@@ -235,9 +239,7 @@ gameObj.L2.prototype = {
 
 
         //Rocket Jump
-        if ((player.body.rocketJump || rocketReady) && !player.body.onFloor() && (cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
-            
-            boost = true;
+        if ((player.body.rocketJump || rocketReady) && !holdRocket && !player.body.onFloor() && (cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
 
             if (cursors.up.isDown && cursors.right.isDown) {
                 radian = 3 / 4 * Math.PI;
@@ -260,10 +262,12 @@ gameObj.L2.prototype = {
                 this.jumpDirection(player, radian);
                 this.emitParticle(emitter, radian);
             } else if (cursors.right.isDown) {
+                if (player.body.rocketJump){ boost = true; }
                 radian = .9 * Math.PI;
                 this.jumpDirection(player, radian);
                 this.emitParticle(emitter, radian);
             } else if (cursors.left.isDown) {
+                if (player.body.rocketJump){ boost = true; }
                 radian = 0.1 * Math.PI;
                 this.jumpDirection(player, radian);
                 this.emitParticle(emitter, radian);
@@ -274,19 +278,24 @@ gameObj.L2.prototype = {
                 this.emitParticle(emitter, radian);
             }
             
-            if (rocketReady == true) {
-                rocketReady = false;
-                HUDFuel.frame = 0;
-            }
+//            if (rocketReady == true) {
+//                rocketReady = false;
+//            }
             jetpackFx.play();
         }
-        else if (!player.body.onFloor() && !(cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
+        else if (!player.body.onFloor() && !(cursors.left.isDown || cursors.right.isDown)) {
             boost = false;
         }
         
-        if(!rocketReady) {
-            HUDFuel.frame = 1;
+        if (!player.body.onFloor() && !player.body.rocketJump && (cursors.left.isDown || cursors.right.isDown || cursors.up.isDown || cursors.down.isDown)) {
+            holdRocket = true;
         }
+        else { holdRocket = false; }
+        
+        if(player.body.rocketJump || rocketReady) {
+            HUDFuel.frame = 0;
+        }
+        else { HUDFuel.frame = 1; }
         if (player.body.onFloor()) {
             player.body.rocketJump = true;
         }
@@ -419,6 +428,7 @@ gameObj.L2.prototype = {
         
         player.body.velocity.y = -Math.sin(radian) * 700;
         player.body.rocketJump = false;
+        if (rocketReady) { rocketReady = false; }
     },
     emitParticle: function (emitter, radian) {
         //particle effect
@@ -462,7 +472,6 @@ gameObj.L2.prototype = {
     collectFuel: function (player, fuelPacks) {
         console.log("Fuel!");
         rocketReady = true;
-        HUDFuel.frame = 0;
         fuelpodFx.play();
         //remove sprite
         fuelPacks.destroy();
@@ -473,14 +482,27 @@ gameObj.L2.prototype = {
             this.game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 42, 46, "#333");
         }
         else {
-            this.game.debug.text("Done!", 2, 14, "#0f0");
-            shutdown();
+            this.game.debug.text("");
+            //shutdown();
         }
     },
     endTimer: function () {
-        this.gameOver();
+        //this.gameOver();
         // Stop the timer when the delayed event triggers
         timer.stop();
+        
+        var redFlash = this.add.sprite(0, 0, 'RedScreen');
+        redFlash.alpha = 0;
+        this.add.tween(redFlash).to( { alpha: 1 }, 200, "Linear", true);
+        redFlash.yoyo = (true, 1000);
+        
+        ltimer = this.game.time.create();
+        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 1, this.gameOver, this);
+        ltimer.start();
+        
+        var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
+        fadeOut.alpha = 0;
+        this.add.tween(fadeOut).to( { alpha: 1 }, 1000, "Linear", true);
     },
     formatTime: function (s) {
         // Convert seconds (s) to a nicely formatted and padded time string
@@ -489,6 +511,8 @@ gameObj.L2.prototype = {
         return minutes.substr(-2) + ":" + seconds.substr(-2);
     },
     gameOver: function () {
+        music.stop();
+        alarm.stop();
         this.game.state.start('Loser');
     },
     //Nuetralizes all input from the player
@@ -500,21 +524,18 @@ gameObj.L2.prototype = {
         }
 
     },
-    Win: function () {
-
+    Win: function () {        
+        
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6) {
+        if (door.frame != 6 && player.body.onFloor()) { 
             door.animations.play('open');
+            timer.pause();
         }
-        if (door.frame == 6 && player.body.onFloor()) {
-            if (this.player) {
-                this.player.destroy();
-                this.player = null;
-            }
-            this.game.state.start('L3-IntroduceRocket');
+        if (door.frame == 6) {
+            this.game.state.start('L3');
         }
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
