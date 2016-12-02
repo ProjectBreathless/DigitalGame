@@ -32,6 +32,9 @@ gameObj.Loser.prototype = {
 		
 		var menuBtn = this.add.button(1000, this.world.centerY, 'menuBtn', this.mainScreen, this, 1, 0, 2);
 		menuBtn.anchor.setTo(0.5, 0.5);
+		
+		var musicLose = this.add.audio('musicLoseScreen');
+		musicLose.play();
 
 //		//Add text
 //		var scoreText = score;
