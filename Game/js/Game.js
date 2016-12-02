@@ -21,6 +21,8 @@ gameObj.Game = function (game) {
     var doubleJump;
     var maxSpeedY;
 
+    var tilesprite;
+
 
     var crystalFx;
     var aircapsuleFx;
@@ -34,6 +36,12 @@ gameObj.Game = function (game) {
 
     var music;
     var alarm;
+    
+    
+    var prevX;
+    var prevY;
+
+    var group;
 
 };
 
@@ -41,6 +49,8 @@ gameObj.Game.prototype = {
 
     create: function () {
         console.log("State - Game");
+
+
 
         this.game.input.mouse.capture = true;
 
@@ -50,17 +60,22 @@ gameObj.Game.prototype = {
 
         this.stage.backgroundColor = '#2d2d2d';
 
+        star_tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'starField');
+        star_tilesprite.fixedToCamera = true;
+
+        tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'spaceShip');
+        tilesprite.fixedToCamera = true;
+
+        
         map = this.add.tilemap('map');
 
         map.addTilesetImage('Alien_Ship_Tileset');
-
+        
         layer = map.createLayer('Tile Layer 1');
 
         layer.resizeWorld();
 
-
         map.setCollisionBetween(1, 200);
-
 
 
         facing = 'right';
@@ -218,6 +233,14 @@ gameObj.Game.prototype = {
         // Start the timer
         timer.start();
 
+        
+        prevX = player.body.x;
+        prevY = player.body.y;
+        // console.log(tilesprite.width);
+        // console.log(tilesprite.height);
+        // tilesprite.x = player.body.x - (tilesprite.width/2);
+        // tilesprite.y = player.body.y - (tilesprite.height/2);
+
     },
 
     update: function () {
@@ -228,6 +251,19 @@ gameObj.Game.prototype = {
         this.game.physics.arcade.collide(fuelPacks, layer);
         this.game.physics.arcade.collide(airPacks, layer);
         this.game.physics.arcade.collide(emitter, layer);
+
+
+        star_tilesprite.tilePosition.x -=2;
+        star_tilesprite.tilePosition.y -=0.5;
+
+        if(player.body.x != prevX){
+            tilesprite.tilePosition.x += (player.body.x - prevX)*-0.2;
+        }
+
+        
+        if(player.body.y != prevY){
+            tilesprite.tilePosition.y += (player.body.y - prevY)*-0.2;
+        }
 
 
         //Rocket Jump
@@ -412,6 +448,10 @@ gameObj.Game.prototype = {
         this.physics.arcade.overlap(player, door, this.Win, null, this);
         //this.physics.arcade.collide(player, crystals, this.collect, null, this);
         //crystals.imovable = true;
+
+        
+        prevX = player.body.x;
+        prevY = player.body.y;
 
 
 

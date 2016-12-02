@@ -22,7 +22,10 @@ gameObj.Preloader.prototype = {
         this.load.image('Alien_Ship_Tileset', 'levels/32x32_tiles.png');
         //this.load.image('walls_1x2', 'levels/walls_1x2.png');
         //this.load.image('tiles2', 'levels/tiles2.png');
-        
+
+
+        this.load.image('spaceShip', 'levels/background_bigger.png')
+        this.load.image('starField', 'levels/starfield_background.png')
         this.load.spritesheet('Aria', 'levels/Aria_Spritesheet.png', 46, 72);
         //this.load.image('door', 'levels/Door_Locked.png', 80, 80);
         this.load.spritesheet('door', 'levels/door.png', 80, 80);
