@@ -1,5 +1,7 @@
 gameObj.Loser = function(game) {};
 
+var musicLose;
+
 gameObj.Loser.prototype = {
 	create: function() {
 		console.log("State - Loser");
@@ -33,7 +35,7 @@ gameObj.Loser.prototype = {
 		var menuBtn = this.add.button(1000, this.world.centerY, 'menuBtn', this.mainScreen, this, 1, 0, 2);
 		menuBtn.anchor.setTo(0.5, 0.5);
 		
-		var musicLose = this.add.audio('musicLoseScreen');
+		musicLose = this.add.audio('musicLoseScreen');
 		musicLose.play();
 
 //		//Add text
@@ -48,11 +50,11 @@ gameObj.Loser.prototype = {
 		
 	},
 	startGame: function() {
-		music.stop();
+		musicLose.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
-    	music.stop();
+    	musicLose.stop();
 		this.game.state.start('MainMenu');
 	}
 };

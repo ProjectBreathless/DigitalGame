@@ -1,5 +1,7 @@
 gameObj.Winner = function(game) {};
 
+var musicWin;
+
 var distance = 300;
 var speed = 6;
 var star;
@@ -89,6 +91,9 @@ gameObj.Winner.prototype = {
         bgGroup.add(myScore);
         bgGroup.add(myTime);
         
+        musicWin = this.add.audio('musicWinScreen');
+        musicWin.loopFull();
+        
     },
 
     update: function() {
@@ -116,11 +121,11 @@ gameObj.Winner.prototype = {
     },
 		
 	startGame: function() {
-        music.stop();
+		musicWin.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
-        music.stop();
+        musicWin.stop();
 		this.game.state.start('MainMenu');
 	}
 };

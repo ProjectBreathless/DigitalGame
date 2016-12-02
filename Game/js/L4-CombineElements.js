@@ -534,6 +534,7 @@ gameObj.L4.prototype = {
         }
         if (door.frame == 6) {
             alarm.stop();
+            music.stop();
             this.game.state.start('Winner');
         }
         else{
