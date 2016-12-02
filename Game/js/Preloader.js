@@ -47,7 +47,7 @@ gameObj.Preloader.prototype = {
         
         this.load.spritesheet('rocketParticles', 'levels/rocketParticle_spritesheet.png', 8, 8);
         
-        this.load.audio('musicInGame', 'sound/RoccoW_-_06_-_Pumped.mp3');
+        this.load.audio('musicInGame', 'sound/RoccoW_-_08_-_Sweet_Self_Satisfaction.mp3');
         this.load.audio('musicMainMenu', 'sound/Visager_-_15_-_Epilogue.mp3');
         this.load.audio('musicLoseScreen', 'sound/262353__stereo-surgeon__no-turning-back-synth-pad_edited.wav');
         this.load.audio('crystalFx', 'sound/Cut Audio Files/27568__suonho__memorymoon-space-blaster-plays_cut_cut.wav');
