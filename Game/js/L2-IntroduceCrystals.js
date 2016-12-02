@@ -1,10 +1,11 @@
-gameObj.Game = function (game) {
+gameObj.L2 = function (game) {
     // Declare game variables
     var player;
     var facing = 'right';
     var jumpTimer = 0;
     var cursors;
     var boost;
+    
 
     var map;
     var layer;
@@ -13,16 +14,14 @@ gameObj.Game = function (game) {
     var fuelPacks;
     var airPacks;
     var treasure;
-    var timer, timerEvent;
+    var timer, timerEvent, ltimer, loseEvent;
     var min;
     var sec;
     var rocketReady;
     var rFuel;
     var doubleJump;
     var maxSpeedY;
-
-    var tilesprite;
-
+    var holdRocket;
 
     var crystalFx;
     var aircapsuleFx;
@@ -36,21 +35,13 @@ gameObj.Game = function (game) {
 
     var music;
     var alarm;
-    
-    
-    var prevX;
-    var prevY;
-
-    var group;
 
 };
 
-gameObj.Game.prototype = {
+gameObj.L2.prototype = {
 
     create: function () {
-        console.log("State - Game");
-
-
+        console.log("State - L2");
 
         this.game.input.mouse.capture = true;
 
@@ -60,22 +51,17 @@ gameObj.Game.prototype = {
 
         this.stage.backgroundColor = '#2d2d2d';
 
-        star_tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'starField');
-        star_tilesprite.fixedToCamera = true;
-
-        tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'spaceShip');
-        tilesprite.fixedToCamera = true;
-
-        
-        map = this.add.tilemap('map');
+        map = this.add.tilemap('l2map');
 
         map.addTilesetImage('Alien_Ship_Tileset');
-        
+
         layer = map.createLayer('Tile Layer 1');
 
         layer.resizeWorld();
 
+
         map.setCollisionBetween(1, 200);
+
 
 
         facing = 'right';
@@ -85,7 +71,6 @@ gameObj.Game.prototype = {
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
-        door.body.setSize(20, 20, 30, 30);
         door.body.collideWorldBounds = true;
 
         //door = this.game.add.group();
@@ -115,8 +100,6 @@ gameObj.Game.prototype = {
         player.body.rocketJump = true;
         // player.body.friction = 0.5;
 
-        var xCryPositions = [350, 585, 875, 875, 1100];//, 325, 350, 375];
-        var yCryPositions = [400, 300, 425, 75, 125];//, 300, 225, 200];
         
         //HUD
         HUDTime = this.add.image(20, 20, 'timeInd');
@@ -126,11 +109,11 @@ gameObj.Game.prototype = {
         HUDFuel = this.add.sprite(120, 30, 'Fuel_Ind', 1);
         HUDFuel.fixedToCamera = true;
         
-
-
-
-        // player.body.fixedRotation = true;
-        // player.body.setMaterial(characterMaterial);
+        
+        //Crystals
+        var xCryPositions = [];//, 325, 350, 375];
+        var yCryPositions = [];//, 300, 225, 200];
+        
         crystals = this.game.add.group();
         crystals.enableBody = true;
         crystals.physicsBodyType = Phaser.Physics.ARCADE;
@@ -142,8 +125,10 @@ gameObj.Game.prototype = {
             c.body.immovable = true;
         }
 
-        var xAirPositions = [350, 585];
-        var yAirPositions = [225, 200];
+        
+        //Air Capsules
+        var xAirPositions = [880];
+        var yAirPositions = [260];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
@@ -152,11 +137,13 @@ gameObj.Game.prototype = {
             f.name = "air" + i;
             f.body.velocity[1] = 0;
             f.body.immovable = true;
-            f.body.gravity.y = 1750;
+            //f.body.gravity.y = 1750;
         }
 
-        var fuelXPositions = [875];//, 900, 630];
-        var fuelYPositions = [450];//750, 850];
+        
+        //Rocket Fuel
+        var fuelXPositions = [];//, 900, 630];
+        var fuelYPositions = [];//750, 850];
 
         fuelPacks = this.game.add.group();
         fuelPacks.enableBody = true;
@@ -165,19 +152,14 @@ gameObj.Game.prototype = {
             var e = fuelPacks.create(fuelXPositions[i], fuelYPositions[i], 'fuel');
             e.name = "fuel" + i;
             e.body.velocity[1] = 0;
-            e.body.gravity.y = 1750;
+            //e.body.gravity.y = 1750;
 
 
             e.body.immovable = true;
         }
-        //crystals = this.add.sprite(300, 300, 'crystal');
-        //crystals.anchor.setTo(0.5, 0.5);
-        //this.physics.arcade.enable(crystals);
-
-
-        //crystals.body.onCollide = new Phaser.Signal();
-        //crystals.body.onCollide.add(this.collect, this);
-
+        
+        
+        //Rocket Particles
         emitter = this.game.add.emitter(0, 0, 50);
         emitter.gravity = 0;
         emitter.bounce.setTo(0.5, 0.5);
@@ -190,12 +172,15 @@ gameObj.Game.prototype = {
             particle.animations.add('smoke', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 28);
         }, this);
 
+        
+        //Controls
         cursors = this.input.keyboard.createCursorKeys();
         a = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
         w = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+        
         score = 0;
 
         treasure = this.add.text(40, 69, + score.toString(), { font: "20px VT323", fill: "#333", align: "left" });
@@ -203,9 +188,9 @@ gameObj.Game.prototype = {
         //treasure.cameraOffset.setTo(10, 550);
 
         rocketReady = false;
-        rFuel = 0;
         doubleJump = false;
-
+        holdRocket = false;
+        
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
         doorFx = this.add.audio('doorFx');
@@ -216,10 +201,10 @@ gameObj.Game.prototype = {
 
         music = this.add.audio('musicInGame');
         music.loopFull();
-        music.volume = 0.5;
+        music.volume = 0.35;
         alarm = this.add.audio('alarm');
         alarm.loopFull();
-        alarm.volume = 0.35;
+        alarm.volume = 0.2;
 
         // Create the timer
         timer = this.game.time.create();
@@ -230,20 +215,20 @@ gameObj.Game.prototype = {
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
 
-        // Start the timer
-        timer.start();
-
         
-        prevX = player.body.x;
-        prevY = player.body.y;
-        // console.log(tilesprite.width);
-        // console.log(tilesprite.height);
-        // tilesprite.x = player.body.x - (tilesprite.width/2);
-        // tilesprite.y = player.body.y - (tilesprite.height/2);
-
-    },
+        //Fade in
+        var fadeIn = this.add.sprite(0, 0, 'BlackScreen');
+        fadeIn.alpha = 1;
+        var tweenIn = this.add.tween(fadeIn).to( { alpha: 0 }, 500, "Linear", true);
+        
+        timer.start();
+        
+        
+    },    
 
     update: function () {
+        
+        
 
         this.game.physics.arcade.collide(player, layer);
         this.game.physics.arcade.collide(door, layer);
@@ -253,23 +238,8 @@ gameObj.Game.prototype = {
         this.game.physics.arcade.collide(emitter, layer);
 
 
-        star_tilesprite.tilePosition.x -=2;
-        star_tilesprite.tilePosition.y -=0.5;
-
-        if(player.body.x != prevX){
-            tilesprite.tilePosition.x += (player.body.x - prevX)*-0.2;
-        }
-
-        
-        if(player.body.y != prevY){
-            tilesprite.tilePosition.y += (player.body.y - prevY)*-0.2;
-        }
-
-
         //Rocket Jump
-        if ((player.body.rocketJump || rocketReady) && !player.body.onFloor() && (cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
-            
-            boost = true;
+        if ((player.body.rocketJump || rocketReady) && !holdRocket && !player.body.onFloor() && (cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
 
             if (cursors.up.isDown && cursors.right.isDown) {
                 radian = 3 / 4 * Math.PI;
@@ -292,10 +262,12 @@ gameObj.Game.prototype = {
                 this.jumpDirection(player, radian);
                 this.emitParticle(emitter, radian);
             } else if (cursors.right.isDown) {
+                if (player.body.rocketJump){ boost = true; }
                 radian = .9 * Math.PI;
                 this.jumpDirection(player, radian);
                 this.emitParticle(emitter, radian);
             } else if (cursors.left.isDown) {
+                if (player.body.rocketJump){ boost = true; }
                 radian = 0.1 * Math.PI;
                 this.jumpDirection(player, radian);
                 this.emitParticle(emitter, radian);
@@ -306,21 +278,24 @@ gameObj.Game.prototype = {
                 this.emitParticle(emitter, radian);
             }
             
-            if (rFuel == 1) {
-                rFuel = 0;
-            }
-            else if ((rFuel == 0) && (rocketReady == true)) {
-                rocketReady = false;
-            }
+//            if (rocketReady == true) {
+//                rocketReady = false;
+//            }
             jetpackFx.play();
         }
-        else if (!player.body.onFloor() && !(cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
+        else if (!player.body.onFloor() && !(cursors.left.isDown || cursors.right.isDown)) {
             boost = false;
         }
         
-        if(!rocketReady) {
-            HUDFuel.frame = 1;
+        if (!player.body.onFloor() && !player.body.rocketJump && (cursors.left.isDown || cursors.right.isDown || cursors.up.isDown || cursors.down.isDown)) {
+            holdRocket = true;
         }
+        else { holdRocket = false; }
+        
+        if(player.body.rocketJump || rocketReady) {
+            HUDFuel.frame = 0;
+        }
+        else { HUDFuel.frame = 1; }
         if (player.body.onFloor()) {
             player.body.rocketJump = true;
         }
@@ -435,23 +410,11 @@ gameObj.Game.prototype = {
         if (player.body.onFloor() && player.frame == 4 && facing == 'idle') {
             player.frame = 6;
         }
-                
-
-        // if (space.isDown) && this.time.now > jumpTimer && this.checkIfCanJump()) {
-        //     player.body.moveUp(500);
-        //     jumpTimer = this.time.now + 750;
-        // }
 
         this.physics.arcade.overlap(player, crystals, this.collectCrystal, null, this);
         this.physics.arcade.overlap(player, airPacks, this.collectAir, null, this);
         this.physics.arcade.overlap(player, fuelPacks, this.collectFuel, null, this);
         this.physics.arcade.overlap(player, door, this.Win, null, this);
-        //this.physics.arcade.collide(player, crystals, this.collect, null, this);
-        //crystals.imovable = true;
-
-        
-        prevX = player.body.x;
-        prevY = player.body.y;
 
 
 
@@ -465,6 +428,7 @@ gameObj.Game.prototype = {
         
         player.body.velocity.y = -Math.sin(radian) * 700;
         player.body.rocketJump = false;
+        if (rocketReady) { rocketReady = false; }
     },
     emitParticle: function (emitter, radian) {
         //particle effect
@@ -508,8 +472,6 @@ gameObj.Game.prototype = {
     collectFuel: function (player, fuelPacks) {
         console.log("Fuel!");
         rocketReady = true;
-        HUDFuel.frame = 0;
-        rFuel = 1;
         fuelpodFx.play();
         //remove sprite
         fuelPacks.destroy();
@@ -520,14 +482,27 @@ gameObj.Game.prototype = {
             this.game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 42, 46, "#333");
         }
         else {
-            this.game.debug.text("Done!", 2, 14, "#0f0");
-            shutdown();
+            this.game.debug.text("");
+            //shutdown();
         }
     },
     endTimer: function () {
-        this.gameOver();
+        //this.gameOver();
         // Stop the timer when the delayed event triggers
         timer.stop();
+        
+        var redFlash = this.add.sprite(0, 0, 'RedScreen');
+        redFlash.alpha = 0;
+        this.add.tween(redFlash).to( { alpha: 1 }, 200, "Linear", true);
+        redFlash.yoyo = (true, 1000);
+        
+        ltimer = this.game.time.create();
+        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 1, this.gameOver, this);
+        ltimer.start();
+        
+        var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
+        fadeOut.alpha = 0;
+        this.add.tween(fadeOut).to( { alpha: 1 }, 1000, "Linear", true);
     },
     formatTime: function (s) {
         // Convert seconds (s) to a nicely formatted and padded time string
@@ -536,6 +511,8 @@ gameObj.Game.prototype = {
         return minutes.substr(-2) + ":" + seconds.substr(-2);
     },
     gameOver: function () {
+        music.stop();
+        alarm.stop();
         this.game.state.start('Loser');
     },
     //Nuetralizes all input from the player
@@ -547,18 +524,23 @@ gameObj.Game.prototype = {
         }
 
     },
-    Win: function () {
-
+    Win: function () {        
+        
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6) {
+        if (door.frame != 6 && player.body.onFloor()) { 
             door.animations.play('open');
+            timer.pause();
         }
-        if (w.isDown && player.body.onFloor()) {
-            alarm.stop();
-            this.game.state.start('Winner');
+        if (door.frame == 6) {
+            this.game.state.start('L3');
+        }
+        else{
+            var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
+            fadeOut.alpha = 0;
+            this.add.tween(fadeOut).to( { alpha: 1 }, 4000, "Linear", true);
         }
     }
 

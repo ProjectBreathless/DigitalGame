@@ -3,6 +3,15 @@ gameObj.Preloader = function(game) {};
 gameObj.Preloader.prototype = {
 	preload: function() {
 		console.log("State - preload");
+        
+        this.game.stage.backgroundColor = '#000';
+
+		// Preloader bar animation code
+		this.preloadBg = this.add.sprite((1200-297)/2, (600-145)/2, 'preloaderBg'); // Use the canvas sizing and image sizing
+		this.preloadBar = this.add.sprite((1200-158)/2, (600-50)/2, 'preloaderBar');
+		this.load.setPreloadSprite(this.preloadBar);
+        
+        
 		
         //Main Menu
         this.load.image('mainBG', 'imgs/title/titleScreen.png');
@@ -17,8 +26,11 @@ gameObj.Preloader.prototype = {
         this.load.image('treasInd', 'imgs/Treasure.png');
         this.load.spritesheet('Fuel_Ind', 'imgs/Fuel_Ind.png', 55, 55);
         
-        //Level 1
-        this.load.tilemap('map', 'levels/IntroduceAir.json', null, Phaser.Tilemap.TILED_JSON);
+        //Levels
+        this.load.tilemap('l1map', 'levels/IntroduceAir.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('l2map', 'levels/IntroduceCrystals.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('l3map', 'levels/IntroduceRocket.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('l4map', 'levels/CombineElements.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('Alien_Ship_Tileset', 'levels/32x32_tiles.png');
         //this.load.image('walls_1x2', 'levels/walls_1x2.png');
         //this.load.image('tiles2', 'levels/tiles2.png');
@@ -40,15 +52,22 @@ gameObj.Preloader.prototype = {
         this.load.audio('crystalFx', 'sound/Cut Audio Files/27568__suonho__memorymoon-space-blaster-plays_cut_cut.wav');
         this.load.audio('aircapsuleFx', 'sound/Cut Audio Files/6110__twistedlemon__cola-bottle_cut_cut.wav');
         this.load.audio('doorFx', 'sound/Cut Audio Files/123253__skullsmasha__mechanicalclamp_cut.wav');
-        this.load.audio('alarm', 'sound/Attribution Noncommercial License Items/39514__syna-max__alarm-of-d00m.wav');
+        this.load.audio('alarm', 'sound/39514__syna-max__alarm-of-d00m_silence.wav');
         this.load.audio('fuelpodFx', 'sound/30935__aust-paul__possiblelazer.wav');
         this.load.audio('jetpackFx', 'sound/Cut Audio Files/36847__ecodtr__laserrocket2_cut_cut.wav');
         
+        //Fade Screen
+        this.load.image('BlackScreen', 'imgs/BlackScreen.png');
+        this.load.image('RedScreen', 'imgs/RedScreen.png');
+        
         //Win Screen
         this.load.image('successSprite', 'imgs/Success_sprite.png');
-        this.load.image('replayBtn', 'imgs/Replay_button.png');
-        this.load.image('menuBtn', 'imgs/Menu_button.png');
+        this.load.spritesheet('replayBtn', 'imgs/Replay_button.png', 208, 98);
+        this.load.spritesheet('menuBtn', 'imgs/Menu_button.png', 208, 98);
         this.load.image('tinystar', 'imgs/star2.png');
+        
+        //Lose Screen
+        this.load.image('failSprite', 'imgs/Failure_sprite.png');
 
         
 	},
