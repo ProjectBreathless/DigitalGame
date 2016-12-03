@@ -118,7 +118,7 @@ body {
   z-index: 100;
     width: 1200px;
   height: 600px;
-  background: url("http://timblin.co/drexel/gmap261/imgs/title/titleScreen.png");
+  background: url("imgs/title/titleScreen.png");
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.15), 0 15px 12px rgba(0, 0, 0, 0.11);
   z-index: 10000;
 }
