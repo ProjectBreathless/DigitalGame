@@ -526,10 +526,44 @@ gameObj.L3.prototype = {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6 && player.body.onFloor()) {
-            if (this.player) {
-                this.player.destroy();
-                this.player = null;
+        if (door.frame != 6) {
+            
+            this.cursors = this.game.input.keyboard.disable = true;
+            
+            if(player.body.onFloor()){
+                
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+            
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+            }
+            else {
+                
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+                
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+                
+                if(player.x < door.x-5) {
+                    player.body.velocity.x = 50;
+                }
+                else if(player.x > door.x+5) {
+                    player.body.velocity.x = -50;
+                }
             }
             door.animations.play('open');
             timer.pause();

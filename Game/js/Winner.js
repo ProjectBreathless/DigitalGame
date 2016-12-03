@@ -18,6 +18,11 @@ gameObj.Winner.prototype = {
 	create: function() {
         console.log("State - Winner");
         
+        //Added so world size is correct
+        this.game.world.height = 960;
+        this.game.world.width = 2600;
+        //-------------------------------------------
+        
         bgGroup = this.game.add.group();
         
         //Add "Success" sprite

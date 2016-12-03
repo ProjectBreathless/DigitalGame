@@ -1,4 +1,4 @@
-gameObj.L4 = function (game) {
+gameObj.L5 = function (game) {
     // Declare game variables
     var player;
     var facing = 'right';
@@ -37,10 +37,10 @@ gameObj.L4 = function (game) {
 
 };
 
-gameObj.L4.prototype = {
+gameObj.L5.prototype = {
 
     create: function () {
-        console.log("State - L4");
+        console.log("State - L5");
 
         this.game.input.mouse.capture = true;
 
@@ -50,7 +50,7 @@ gameObj.L4.prototype = {
 
         this.stage.backgroundColor = '#2d2d2d';
 
-        map = this.add.tilemap('l4map');
+        map = this.add.tilemap('l5map');
 
         map.addTilesetImage('Alien_Ship_Tileset');
 
@@ -66,7 +66,7 @@ gameObj.L4.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(1800, 78, 'door');
+        door = this.add.sprite(3710, 1076, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -77,7 +77,7 @@ gameObj.L4.prototype = {
         //door.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        player = this.add.sprite(200, 400, 'Aria', 7);
+        player = this.add.sprite(480, 1900, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
@@ -110,8 +110,8 @@ gameObj.L4.prototype = {
         
         
         //Crystals
-        var xCryPositions = [];//, 325, 350, 375];
-        var yCryPositions = [];//, 300, 225, 200];
+        var xCryPositions = [1400, 2430, 3408, 3210, 3412, 3210];//, 325, 350, 375];
+        var yCryPositions = [1960, 1980, 1810, 1610, 1445, 1265];//, 300, 225, 200];
         
         crystals = this.game.add.group();
         crystals.enableBody = true;
@@ -126,8 +126,8 @@ gameObj.L4.prototype = {
 
         
         //Air Capsules
-        var xAirPositions = [1000];
-        var yAirPositions = [660];
+        var xAirPositions = [1700, 3070];
+        var yAirPositions = [1830, 1890];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
@@ -141,8 +141,8 @@ gameObj.L4.prototype = {
 
         
         //Rocket Fuel
-        var fuelXPositions = [];//, 900, 630];
-        var fuelYPositions = [];//750, 850];
+        var fuelXPositions = [1220, 2280, 3320, 3320, 3320];//, 900, 630];
+        var fuelYPositions = [1850, 1850, 1560, 1360, 1180];//750, 850];
 
         fuelPacks = this.game.add.group();
         fuelPacks.enableBody = true;
@@ -567,7 +567,7 @@ gameObj.L4.prototype = {
             timer.pause();
         }
         if (door.frame == 6) {
-            this.game.state.start('L5');
+            this.game.state.start('L6');
         }
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');

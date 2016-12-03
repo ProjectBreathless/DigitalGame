@@ -31,7 +31,7 @@ gameObj.Preloader.prototype = {
         this.load.tilemap('l2map', 'levels/IntroduceCrystals.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l3map', 'levels/IntroduceRocket.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l4map', 'levels/CombineElements.json', null, Phaser.Tilemap.TILED_JSON);
-        //5
+        this.load.tilemap('l5map', 'levels/BoostTiming.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l6map', 'levels/MakingChoices.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('Alien_Ship_Tileset', 'levels/32x32_tiles.png');
         //this.load.image('walls_1x2', 'levels/walls_1x2.png');

@@ -201,12 +201,12 @@ gameObj.L6.prototype = {
 
         doorFxPlay = 0;
 
-        music = this.add.audio('musicInGame');
-        music.loopFull();
-        music.volume = 0.35;
-        alarm = this.add.audio('alarm');
-        alarm.loopFull();
-        alarm.volume = 0.2;
+//        music = this.add.audio('musicInGame');
+//        music.loopFull();
+//        music.volume = 0.35;
+//        alarm = this.add.audio('alarm');
+//        alarm.loopFull();
+//        alarm.volume = 0.2;
 
         // Create the timer
         timer = this.game.time.create();
@@ -493,6 +493,18 @@ gameObj.L6.prototype = {
         // Stop the timer when the delayed event triggers
         timer.stop();
         
+        a.isDown = false;
+        d.isDown = false;
+        w.isDown = false;
+                
+        this.a = this.game.input.keyboard.disable = true;
+        this.w = this.game.input.keyboard.disable = true;
+        this.d = this.game.input.keyboard.disable = true;
+            
+        this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+        this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+        this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+        
         var redFlash = this.add.sprite(0, 0, 'RedScreen');
         redFlash.alpha = 0;
         this.add.tween(redFlash).to( { alpha: 1 }, 200, "Linear", true);
@@ -526,17 +538,57 @@ gameObj.L6.prototype = {
         }
 
     },
-    Win: function () {        
-        
+    Win: function () {
+
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6 && player.body.onFloor()) { 
+        if (door.frame != 6) {
+            this.cursors = this.game.input.keyboard.disable = true;
+            
+            if(player.body.onFloor()){
+                
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+            
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+            }
+            else {
+                
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+                
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+                
+                
+                if(player.x < door.x-5) {
+                    player.body.velocity.x = 50;
+                }
+                else if(player.x > door.x+5) {
+                    player.body.velocity.x = -50;
+                }
+            }
             door.animations.play('open');
             timer.pause();
         }
         if (door.frame == 6) {
+            alarm.stop();
+            music.stop();
             this.game.state.start('Winner');
         }
         else{
