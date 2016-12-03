@@ -5,7 +5,6 @@ gameObj.L1 = function (game) {
     var jumpTimer = 0;
     var cursors;
     var boost;
-    
 
     var map;
     var layer;
@@ -14,6 +13,7 @@ gameObj.L1 = function (game) {
     var fuelPacks;
     var airPacks;
     var treasure;
+    var cryScore;
     var timer, timerEvent, ltimer, loseEvent;
     var min;
     var sec;
@@ -180,10 +180,10 @@ gameObj.L1.prototype = {
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-        
-        score = 0;
 
-        treasure = this.add.text(40, 69, + score.toString(), { font: "20px VT323", fill: "#333", align: "left" });
+        cryScore = this.game.score;
+        
+        treasure = this.add.text(40, 69, + cryScore.toString(), { font: "20px VT323", fill: "#333", align: "left" });
         treasure.fixedToCamera = true;
         //treasure.cameraOffset.setTo(10, 550);
 
@@ -210,10 +210,11 @@ gameObj.L1.prototype = {
         timer = this.game.time.create();
 
         min = 0;
-        sec = 10;
+        sec = 5;
 
         // Set the length of the timer
-        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
+        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * (sec + this.game.timeLeft), this.endTimer, this);
+        
 
         
         //Fade in
@@ -449,10 +450,10 @@ gameObj.L1.prototype = {
     },
     collectCrystal: function (player, crystals) {
         console.log("Treasure!");
-        score++
+        cryScore++;
         crystalFx.play();
-        console.log("Treasure! = " + score);
-        treasure.setText(score);
+        console.log("Treasure! = " + cryScore);
+        treasure.setText(cryScore);
         //remove sprite
         crystals.destroy();
     },
@@ -533,6 +534,9 @@ gameObj.L1.prototype = {
         if (door.frame != 6) {
             this.cursors = this.game.input.keyboard.disable = true;
             
+            this.game.score = cryScore;
+            this.game.timeLeft = Math.round((timerEvent.delay - timer.ms) / 1000);
+            
             if(player.body.onFloor()){
                 
                 a.isDown = false;
@@ -570,7 +574,7 @@ gameObj.L1.prototype = {
                 }
             }
             door.animations.play('open');
-            timer.pause();
+            
         }
         if (door.frame == 6) {
             this.game.state.start('L3');

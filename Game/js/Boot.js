@@ -1,5 +1,7 @@
 var gameObj = {
 	// Global variables are decleared here!
+    score: 0,
+    timeLeft: 0
 };
 
 gameObj.Boot = function(game) {};
@@ -12,6 +14,7 @@ gameObj.Boot.prototype = {
 	},
 	create: function() {
 		this.game.state.start('Preloader');
-        var score;
+        this.game.score = 0;
+        this.game.timeLeft = 5;
 	}
 };

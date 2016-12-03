@@ -210,10 +210,10 @@ gameObj.L2.prototype = {
         timer = this.game.time.create();
 
         min = 0;
-        sec = 10;
+        sec = 5;
 
         // Set the length of the timer
-        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
+        timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * (sec + this.game.timeLeft), this.endTimer, this);
 
         
         //Fade in

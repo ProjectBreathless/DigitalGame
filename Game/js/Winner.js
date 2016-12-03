@@ -38,8 +38,8 @@ gameObj.Winner.prototype = {
 
         //Add Scores
         
-		var scoreText = score;
-        var timeText = Math.round((timerEvent.delay - timer.ms) / 1000);
+		var scoreText = this.game.score;
+        var timeText = this.game.timeLeft;
         
         var sText = this.add.text(850, 200, scoreText );
         var tText = this.add.text(850, 290, timeText + " Seconds" );
