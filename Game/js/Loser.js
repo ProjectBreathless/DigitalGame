@@ -1,5 +1,7 @@
 gameObj.Loser = function(game) {};
 
+var musicLose;
+
 gameObj.Loser.prototype = {
 	create: function() {
 		console.log("State - Loser");
@@ -15,19 +17,22 @@ gameObj.Loser.prototype = {
         
         //Add button
 		// The numbers given in parameters are the indexes of the frames, in this order: over, out, down 
-        var replayBtn = this.add.button(200, this.world.centerY, 'replayBtn', this.startGame, this, 1, 0, 2);
+        var replayBtn = this.add.button(200, 480, 'replayBtn', this.startGame, this, 1, 0, 2);
         replayBtn.anchor.setTo(0.5, 0.5);
 		
-		var menuBtn = this.add.button(1000, this.world.centerY, 'menuBtn', this.mainScreen, this, 1, 0, 2);
+		var menuBtn = this.add.button(1000, 480, 'menuBtn', this.mainScreen, this, 1, 0, 2);
 		menuBtn.anchor.setTo(0.5, 0.5);
+		
+		musicLose = this.add.audio('musicLoseScreen');
+		musicLose.play();
 		
 	},
 	startGame: function() {
-		music.stop();
+		musicLose.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
-    	music.stop();
+    	musicLose.stop();
 		this.game.state.start('MainMenu');
 	}
 };

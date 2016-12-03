@@ -1,5 +1,7 @@
 gameObj.Winner = function(game) {};
 
+var musicWin;
+
 var distance = 300;
 var speed = 6;
 var star;
@@ -15,6 +17,11 @@ var bgGroup;
 gameObj.Winner.prototype = {
 	create: function() {
         console.log("State - Winner");
+        
+        //Added so world size is correct
+        this.game.world.height = 960;
+        this.game.world.width = 2600;
+        //-------------------------------------------
         
         bgGroup = this.game.add.group();
         
@@ -89,6 +96,9 @@ gameObj.Winner.prototype = {
         bgGroup.add(myScore);
         bgGroup.add(myTime);
         
+        musicWin = this.add.audio('musicWinScreen');
+        musicWin.loopFull();
+        
     },
 
     update: function() {
@@ -116,11 +126,11 @@ gameObj.Winner.prototype = {
     },
 		
 	startGame: function() {
-        music.stop();
+		musicWin.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
-        music.stop();
+        musicWin.stop();
 		this.game.state.start('MainMenu');
 	}
 };

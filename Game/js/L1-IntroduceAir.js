@@ -497,12 +497,12 @@ gameObj.L1.prototype = {
         redFlash.yoyo = (true, 1000);
         
         ltimer = this.game.time.create();
-        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 1, this.gameOver, this);
+        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 0.5, this.gameOver, this);
         ltimer.start();
         
         var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
         fadeOut.alpha = 0;
-        this.add.tween(fadeOut).to( { alpha: 1 }, 1000, "Linear", true);
+        this.add.tween(fadeOut).to( { alpha: 1 }, 500, "Linear", true);
     },
     formatTime: function (s) {
         // Convert seconds (s) to a nicely formatted and padded time string
@@ -524,14 +524,13 @@ gameObj.L1.prototype = {
         }
 
     },
-    Win: function () {        
-        
+    Win: function () {
+
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6) { 
-            
+        if (door.frame != 6) {
             this.cursors = this.game.input.keyboard.disable = true;
             
             if(player.body.onFloor()){
@@ -550,13 +549,26 @@ gameObj.L1.prototype = {
             }
             else {
                 
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+                
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
                 
-                player.body.velocity.x = 200;
+                
+                if(player.x < door.x-5) {
+                    player.body.velocity.x = 50;
+                }
+                else if(player.x > door.x+5) {
+                    player.body.velocity.x = -50;
+                }
             }
-            
             door.animations.play('open');
             timer.pause();
         }
@@ -566,7 +578,7 @@ gameObj.L1.prototype = {
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
             fadeOut.alpha = 0;
-            this.add.tween(fadeOut).to( { alpha: 1 }, 2000, "Linear", true);
+            this.add.tween(fadeOut).to( { alpha: 1 }, 4000, "Linear", true);
         }
     }
 

@@ -556,21 +556,18 @@ gameObj.L4.prototype = {
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
                 
                 
-                if(player.x < door.x+20) {
-                    player.body.velocity.x += (door.x-player.x)*10;
+                if(player.x < door.x-5) {
+                    player.body.velocity.x = 50;
                 }
-                else if(player.x > door.x-20) {
-                    player.body.velocity.x += (door.x-player.x)*10;
+                else if(player.x > door.x+5) {
+                    player.body.velocity.x = -50;
                 }
-                
-                
             }
             door.animations.play('open');
             timer.pause();
         }
         if (door.frame == 6) {
-            alarm.stop();
-            this.game.state.start('Winner');
+            this.game.state.start('L5');
         }
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');

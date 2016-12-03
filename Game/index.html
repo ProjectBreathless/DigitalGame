@@ -24,20 +24,113 @@
 	<script src="js/Boot.js"></script>
 	<script src="js/Preloader.js"></script>
 	<script src="js/MainMenu.js"></script>
-	<script src="js/MainMenu3.js"></script>
 	<script src="js/L1-IntroduceAir.js"></script>
     <script src="js/L2-IntroduceCrystals.js"></script>
     <script src="js/L3-IntroduceRocket.js"></script>
     <script src="js/L4-CombineElements.js"></script>
+    <script src="js/L5-BoostTiming.js"></script>
+    <script src="js/L6-MakingChoices.js"></script>
 	<script src="js/Winner.js"></script>
 	<script src="js/Loser.js"></script>
 </head>
 
 <body>
        
+       
+       
+<nav class="nav">
+	<div class="nav-head">
+		<div class="nav-head-item">
+			<img src="http://timblin.co/drexel/gmap261/imgs/logo.png">
+		</div>
+		<div class="nav-head-item">
+			— MENU
+		</div>
+	</div>
+	<div class="nav-head-sub">
+		<div class="nav-head-sub_item nav-head-sub_controls" data-pos="0">
+			Controls
+		</div>
+		<div class="nav-head-sub_item nav-head-sub_play visible" data-pos="1">
+			Play
+		</div>
+		<div class="nav-head-sub_item nav-head-sub_about" data-pos="2">
+			About
+		</div>
+	</div>
+</nav>
+
+
+<div class="game_wrap">       
+       
     <div id="phaser-canvas"></div>
     
+</div>
+
+
+<div class="controls">
+	<img src="http://timblin.co/drexel/gmap261/imgs/controls.png" alt="Controls">
+	<div class="controls-item_wrap">
+		<div class="controls-item">
+			<img src="http://timblin.co/drexel/gmap261/levels/Crystal_Sprite_LARGE.png" alt="Crystal">
+			<p>Loot The Ship Of All Its Crystals.</p>
+		</div>
+		<div class="controls-item">
+			<img src="http://timblin.co/drexel/gmap261/levels/Air_CapsuleLARGE.png" alt="Air">
+			<p>Gather Air Pods To Refill Your Oxygen Tank.</p>
+		</div>
+		<div class="controls-item">
+			<img src="http://timblin.co/drexel/gmap261/levels/Fuel_PodLARGE.png" alt="Rocket">
+			<p>Recharge Your Rockets For Mid Air Launches.</p>
+		</div>
+	</div>
+</div>
+
+
+<div class="about">
+	<a href="https://docs.google.com/forms/d/1b1X_IM7C2jFKdeeJJAPMczw7edZ9ceoQIo29rbdaJH4/viewform?edit_requested=true">
+	<div class="about-survey">
+		Played Our Game? Give Us Feedback!
+	</div>
+	</a>
+	<div class="about-team">
+		<div class="about-team-item">
+			<img src="">
+			<h1>Tristan Timblin</h1>
+		</div>
+		<div class="about-team-item">
+			<img src="">
+			<h1>Tristan Timblin</h1>
+		</div>
+		<div class="about-team-item">
+			<img src="">
+			<h1>Tristan Timblin</h1>
+		</div>
+		<div class="about-team-item">
+			<img src="">
+			<h1>Tristan Timblin</h1>
+		</div>
+		<div class="about-team-item">
+			<img src="">
+			<h1>Tristan Timblin</h1>
+		</div>
+		<div class="about-team-item">
+			<img src="">
+			<h1>Tristan Timblin</h1>
+		</div>
+	</div>
+	<div class="about-project">
+		<p>
+			Breathless was created in 2016 at Drexel University in Overview of Computer Gaming with Joshua Kohn.
+		</p>
+	</div>
+</div>
+   
+   
+   
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/webInterface.js"></script>
 	<script>
 		window.onload = function() {
 			console.log('windows loaded');
@@ -45,11 +138,12 @@
 			game.state.add('Boot', gameObj.Boot);
 			game.state.add('Preloader', gameObj.Preloader);
 			game.state.add('MainMenu', gameObj.MainMenu);
-            game.state.add('MainMenu3', gameObj.MainMenu3);
 			game.state.add('L1', gameObj.L1);
             game.state.add('L2', gameObj.L2);
             game.state.add('L3', gameObj.L3);
             game.state.add('L4', gameObj.L4);
+            game.state.add('L5', gameObj.L5);
+            game.state.add('L6', gameObj.L6);
 			game.state.add('Winner', gameObj.Winner);
 			game.state.add('Loser', gameObj.Loser);
 			game.state.start('Boot');

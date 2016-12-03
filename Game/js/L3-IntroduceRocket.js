@@ -67,7 +67,7 @@ gameObj.L3.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(1780, 785, 'door');
+        door = this.add.sprite(1620, 372, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -546,11 +546,24 @@ gameObj.L3.prototype = {
             }
             else {
                 
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+                
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
                 this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
                 
-                player.body.velocity.x = 200;
+                if(player.x < door.x-5) {
+                    player.body.velocity.x = 50;
+                }
+                else if(player.x > door.x+5) {
+                    player.body.velocity.x = -50;
+                }
             }
             door.animations.play('open');
             timer.pause();
