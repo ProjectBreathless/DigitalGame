@@ -1,10 +1,11 @@
-gameObj.L3 = function (game) {
+gameObj.L6 = function (game) {
     // Declare game variables
     var player;
     var facing = 'right';
     var jumpTimer = 0;
     var cursors;
     var boost;
+    
 
     var map;
     var layer;
@@ -13,7 +14,7 @@ gameObj.L3 = function (game) {
     var fuelPacks;
     var airPacks;
     var treasure;
-    var timer, timerEvent;
+    var timer, timerEvent, ltimer, loseEvent;
     var min;
     var sec;
     var rocketReady;
@@ -21,7 +22,6 @@ gameObj.L3 = function (game) {
     var doubleJump;
     var maxSpeedY;
     var holdRocket;
-
 
     var crystalFx;
     var aircapsuleFx;
@@ -38,10 +38,10 @@ gameObj.L3 = function (game) {
 
 };
 
-gameObj.L3.prototype = {
+gameObj.L6.prototype = {
 
     create: function () {
-        console.log("State - L3");
+        console.log("State - L6");
 
         this.game.input.mouse.capture = true;
 
@@ -51,7 +51,7 @@ gameObj.L3.prototype = {
 
         this.stage.backgroundColor = '#2d2d2d';
 
-        map = this.add.tilemap('l3map');
+        map = this.add.tilemap('l6map');
 
         map.addTilesetImage('Alien_Ship_Tileset');
 
@@ -67,7 +67,7 @@ gameObj.L3.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(1620, 372, 'door');
+        door = this.add.sprite(2500, 468, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -78,7 +78,7 @@ gameObj.L3.prototype = {
         //door.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        player = this.add.sprite(100, 400, 'Aria', 7);
+        player = this.add.sprite(150, 550, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
@@ -111,8 +111,9 @@ gameObj.L3.prototype = {
         
         
         //Crystals
-        var xCryPositions = [];//, 325, 350, 375];
-        var yCryPositions = [];//, 300, 225, 200];
+        //placement          jmp1 jmpup jmp2  jmp3  fall  1nook end
+        var xCryPositions = [750, 1280, 1100, 1450, 938,  2000, 2350];//, 325, 350, 375];
+        var yCryPositions = [450,  200,  450,  450, 1400, 950,  800];//, 300, 225, 200];
         
         crystals = this.game.add.group();
         crystals.enableBody = true;
@@ -127,8 +128,9 @@ gameObj.L3.prototype = {
 
         
         //Air Capsules
-        var xAirPositions = [400];
-        var yAirPositions = [800];
+        //                   rckt to   fall  2nook   on sq
+        var xAirPositions = [2080,     938,  1700,   2335];
+        var yAirPositions = [130,      950,  1250,   1420];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
@@ -142,8 +144,8 @@ gameObj.L3.prototype = {
 
         
         //Rocket Fuel
-        var fuelXPositions = [980];//, 900, 630];
-        var fuelYPositions = [600];//750, 850];
+        var fuelXPositions = [2080, 2500];//, 900, 630];
+        var fuelYPositions = [250,  925];//750, 850];
 
         fuelPacks = this.game.add.group();
         fuelPacks.enableBody = true;
@@ -188,9 +190,9 @@ gameObj.L3.prototype = {
         //treasure.cameraOffset.setTo(10, 550);
 
         rocketReady = false;
-        holdRocket = false;
         doubleJump = false;
-
+        holdRocket = false;
+        
         crystalFx = this.add.audio('crystalFx');
         aircapsuleFx = this.add.audio('aircapsuleFx');
         doorFx = this.add.audio('doorFx');
@@ -199,12 +201,12 @@ gameObj.L3.prototype = {
 
         doorFxPlay = 0;
 
-//        music = this.add.audio('musicInGame');
-//        music.loopFull();
-//        music.volume = 0.5;
-//        alarm = this.add.audio('alarm');
-//        alarm.loopFull();
-//        alarm.volume = 0.35;
+        music = this.add.audio('musicInGame');
+        music.loopFull();
+        music.volume = 0.35;
+        alarm = this.add.audio('alarm');
+        alarm.loopFull();
+        alarm.volume = 0.2;
 
         // Create the timer
         timer = this.game.time.create();
@@ -215,16 +217,20 @@ gameObj.L3.prototype = {
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * sec, this.endTimer, this);
 
+        
+        //Fade in
         var fadeIn = this.add.sprite(0, 0, 'BlackScreen');
         fadeIn.alpha = 1;
         var tweenIn = this.add.tween(fadeIn).to( { alpha: 0 }, 500, "Linear", true);
         
-        // Start the timer
         timer.start();
-
-    },
+        
+        
+    },    
 
     update: function () {
+        
+        
 
         this.game.physics.arcade.collide(player, layer);
         this.game.physics.arcade.collide(door, layer);
@@ -520,22 +526,18 @@ gameObj.L3.prototype = {
         }
 
     },
-    Win: function () {
-
+    Win: function () {        
+        
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6 && player.body.onFloor()) {
-            if (this.player) {
-                this.player.destroy();
-                this.player = null;
-            }
+        if (door.frame != 6 && player.body.onFloor()) { 
             door.animations.play('open');
             timer.pause();
         }
         if (door.frame == 6) {
-            this.game.state.start('L4');
+            this.game.state.start('Winner');
         }
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');

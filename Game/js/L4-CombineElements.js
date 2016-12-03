@@ -535,7 +535,7 @@ gameObj.L4.prototype = {
         if (door.frame == 6) {
             alarm.stop();
             music.stop();
-            this.game.state.start('Winner');
+            this.game.state.start('L6');
         }
         else{
             var fadeOut = this.add.sprite(0, 0, 'BlackScreen');

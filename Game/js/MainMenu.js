@@ -35,9 +35,5 @@ gameObj.MainMenu.prototype = {
         fadeOut.alpha = 0;
         this.add.tween(fadeOut).to( { alpha: 1 }, 4000, "Linear", true);
 		this.game.state.start('L1');
-	},
-    
-    instructOne: function() {
-		this.game.state.start('MainMenu2');
 	}
 };
