@@ -29,7 +29,7 @@ gameObj.Loser.prototype = {
         
         //Add button
 		// The numbers given in parameters are the indexes of the frames, in this order: over, out, down 
-        var replayBtn = this.add.button(200, this.world.centerY, 'replayBtn', this.mainScreen, this, 1, 0, 2);
+        var replayBtn = this.add.button(200, this.world.centerY, 'replayBtn', this.startGame, this, 1, 0, 2);
         replayBtn.anchor.setTo(0.5, 0.5);
 		
 		var menuBtn = this.add.button(1000, this.world.centerY, 'menuBtn', this.mainScreen, this, 1, 0, 2);
