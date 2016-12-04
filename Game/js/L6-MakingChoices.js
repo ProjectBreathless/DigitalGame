@@ -443,8 +443,8 @@ gameObj.L6.prototype = {
         this.physics.arcade.overlap(player, fuelPacks, this.collectFuel, null, this);
         this.physics.arcade.overlap(player, door, this.Win, null, this);
 
-        prevX = player.body.x;
-        prevY = player.body.y;
+        prevX = this.camera.x;
+        prevY = this.camera.y;
 
     },
     jumpDirection: function (player, radian) {
