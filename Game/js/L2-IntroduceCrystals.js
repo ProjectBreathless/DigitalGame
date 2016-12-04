@@ -78,7 +78,7 @@ gameObj.L2.prototype = {
         //door.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        player = this.add.sprite(100, 550, 'Aria', 7);
+        player = this.add.sprite(400, 550, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
@@ -127,8 +127,8 @@ gameObj.L2.prototype = {
 
         
         //Air Capsules
-        var xAirPositions = [880];
-        var yAirPositions = [260];
+        var xAirPositions = [];
+        var yAirPositions = [];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
