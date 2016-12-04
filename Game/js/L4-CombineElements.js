@@ -4,7 +4,7 @@ gameObj.L4 = function (game) {
     var facing = 'right';
     var jumpTimer = 0;
     var cursors;
-    var boost;
+    var boost = false;
 
     var map;
     var layer;

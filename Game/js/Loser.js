@@ -20,12 +20,19 @@ gameObj.Loser.prototype = {
 //        // Start the timer
 //        timer.start();
         
+        //Added so world size is correct
+        this.game.world.height = 960;
+        this.game.world.width = 2600;
+        //-------------------------------------------
+        
         var failSprite = this.add.sprite(300, 50, 'failSprite');
         failSprite.anchor.setTo(0, 0);
         
         failSprite.alpha = 0;
         var tween = this.add.tween(failSprite).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 8000, true);
         tween.yoyo(true, 1000);
+        
+        this.game.score = 0;
         
         //Add button
 		// The numbers given in parameters are the indexes of the frames, in this order: over, out, down 
