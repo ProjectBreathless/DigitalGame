@@ -5,7 +5,6 @@ gameObj.L2 = function (game) {
     var jumpTimer = 0;
     var cursors;
     var boost = false;
-    
 
     var map;
     var layer;
@@ -14,6 +13,7 @@ gameObj.L2 = function (game) {
     var fuelPacks;
     var airPacks;
     var treasure;
+    var cryScore;
     var timer, timerEvent, ltimer, loseEvent;
     var min;
     var sec;
@@ -190,10 +190,10 @@ gameObj.L2.prototype = {
         d = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
         space = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-        
-        score = 0;
 
-        treasure = this.add.text(40, 69, + score.toString(), { font: "20px VT323", fill: "#333", align: "left" });
+        cryScore = this.game.score;
+        
+        treasure = this.add.text(40, 69, + cryScore.toString(), { font: "20px VT323", fill: "#333", align: "left" });
         treasure.fixedToCamera = true;
         //treasure.cameraOffset.setTo(10, 550);
 
@@ -224,6 +224,7 @@ gameObj.L2.prototype = {
 
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * (sec + this.game.timeLeft), this.endTimer, this);
+        
 
         
         //Fade in
@@ -477,10 +478,10 @@ gameObj.L2.prototype = {
     },
     collectCrystal: function (player, crystals) {
         console.log("Treasure!");
-        score++
+        cryScore++;
         crystalFx.play();
-        console.log("Treasure! = " + score);
-        treasure.setText(score);
+        console.log("Treasure! = " + cryScore);
+        treasure.setText(cryScore);
         //remove sprite
         crystals.destroy();
     },
@@ -511,7 +512,7 @@ gameObj.L2.prototype = {
         }
         else {
             this.game.debug.text("");
-            //shutdown();
+            //this.shutdown();
         }
     },
     endTimer: function () {
@@ -525,12 +526,12 @@ gameObj.L2.prototype = {
         redFlash.yoyo = (true, 1000);
         
         ltimer = this.game.time.create();
-        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 1, this.gameOver, this);
+        loseEvent = ltimer.add(Phaser.Timer.MINUTE * 0 + Phaser.Timer.SECOND * 0.5, this.gameOver, this);
         ltimer.start();
         
         var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
         fadeOut.alpha = 0;
-        this.add.tween(fadeOut).to( { alpha: 1 }, 1000, "Linear", true);
+        this.add.tween(fadeOut).to( { alpha: 1 }, 500, "Linear", true);
     },
     formatTime: function (s) {
         // Convert seconds (s) to a nicely formatted and padded time string
@@ -545,22 +546,63 @@ gameObj.L2.prototype = {
     },
     //Nuetralizes all input from the player
     shutdown: function () {
-        this.cursor = null;
+        this.cursors = null;
         if (this.player) {
             this.player.destroy();
             this.player = null;
         }
 
     },
-    Win: function () {        
-        
+    Win: function () {
+
         if (doorFxPlay == 0) {
             doorFx.play();
             doorFxPlay++;
         }
-        if (door.frame != 6 && player.body.onFloor()) { 
+        if (door.frame != 6) {
+            this.cursors = this.game.input.keyboard.disable = true;
+            
+            this.game.score = cryScore;
+            this.game.timeLeft = Math.round((timerEvent.delay - timer.ms) / 1000);
+            
+            if(player.body.onFloor()){
+                
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+            
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+            }
+            else {
+                
+                a.isDown = false;
+                d.isDown = false;
+                w.isDown = false;
+                
+                this.a = this.game.input.keyboard.disable = true;
+                this.w = this.game.input.keyboard.disable = true;
+                this.d = this.game.input.keyboard.disable = true;
+                
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                this.game.input.keyboard.removeKey(Phaser.Keyboard.D);
+                
+                
+                if(player.x < door.x-5) {
+                    player.body.velocity.x = 50;
+                }
+                else if(player.x > door.x+5) {
+                    player.body.velocity.x = -50;
+                }
+            }
             door.animations.play('open');
-            timer.pause();
+            
         }
         if (door.frame == 6) {
             this.game.state.start('L3');
