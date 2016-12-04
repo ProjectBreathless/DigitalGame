@@ -21,8 +21,6 @@ gameObj.Game = function (game) {
     var doubleJump;
     var maxSpeedY;
 
-    var tilesprite;
-
 
     var crystalFx;
     var aircapsuleFx;
@@ -40,6 +38,7 @@ gameObj.Game = function (game) {
     
     var prevX;
     var prevY;
+    var tilesprite;
 
     var group;
 
