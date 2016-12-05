@@ -209,12 +209,12 @@ gameObj.L2.prototype = {
 
         doorFxPlay = 0;
 
-        music = this.add.audio('musicInGame');
-        music.loopFull();
-        music.volume = 0.35;
-        alarm = this.add.audio('alarm');
-        alarm.loopFull();
-        alarm.volume = 0.2;
+//        music = this.add.audio('musicInGame');
+//        music.loopFull();
+//        music.volume = 0.35;
+//        alarm = this.add.audio('alarm');
+//        alarm.loopFull();
+//        alarm.volume = 0.2;
 
         // Create the timer
         timer = this.game.time.create();
