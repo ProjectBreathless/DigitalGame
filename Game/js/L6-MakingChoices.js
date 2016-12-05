@@ -94,7 +94,7 @@ gameObj.L6.prototype = {
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
         this.game.physics.arcade.enable(player);
-        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
         
 
         //Set some physics on the sprite
