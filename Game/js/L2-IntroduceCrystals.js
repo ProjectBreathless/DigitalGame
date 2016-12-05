@@ -77,7 +77,7 @@ gameObj.L2.prototype = {
         facing = 'right';
         jumpTimer = 0;
 
-        door = this.add.sprite(1300, 182, 'door');
+        door = this.add.sprite(1000, 594, 'door');
         door.animations.add('open', [1, 2, 3, 4, 4, 5, 5, 6], 8, false);
         door.animations.add('stay', [6, 6, 6, 6, 6, 6], 10, false);
         this.game.physics.arcade.enable(door);
@@ -88,12 +88,12 @@ gameObj.L2.prototype = {
         //door.physicsBodyType = Phaser.Physics.ARCADE;
 
 
-        player = this.add.sprite(400, 550, 'Aria', 7);
+        player = this.add.sprite(100, 1200, 'Aria', 7);
         player.animations.add('left', [5, 4, 3, 2, 1, 0], 12, true);
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
         this.game.physics.arcade.enable(player);
-        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
         
 
         //Set some physics on the sprite
@@ -121,8 +121,8 @@ gameObj.L2.prototype = {
         
         
         //Crystals
-        var xCryPositions = [];//, 325, 350, 375];
-        var yCryPositions = [];//, 300, 225, 200];
+        var xCryPositions = [];
+        var yCryPositions = [];
         
         crystals = this.game.add.group();
         crystals.enableBody = true;

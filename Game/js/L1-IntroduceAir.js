@@ -93,7 +93,7 @@ gameObj.L1.prototype = {
         player.animations.add('right', [8, 9, 10, 11, 12, 13], 12, true);
 
         this.game.physics.arcade.enable(player);
-        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        this.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 1, 1);
 
 
         //Set some physics on the sprite
@@ -225,18 +225,15 @@ gameObj.L1.prototype = {
         // Set the length of the timer
         timerEvent = timer.add(Phaser.Timer.MINUTE * min + Phaser.Timer.SECOND * (sec + this.game.timeLeft), this.endTimer, this);
 
-
+        timer.start();
 
         //Fade in
         var fadeIn = this.add.sprite(0, 0, 'BlackScreen');
         fadeIn.alpha = 1;
         var tweenIn = this.add.tween(fadeIn).to({ alpha: 0 }, 500, "Linear", true);
-
-        timer.start();
-
+        
         prevX = this.camera.x;
         prevY = this.camera.y;
-
 
     },
 
