@@ -109,20 +109,11 @@ gameObj.L2.prototype = {
         player.body.friction = 40;
         player.body.rocketJump = true;
         // player.body.friction = 0.5;
-
-        
-        //HUD
-        HUDTime = this.add.image(20, 20, 'timeInd');
-        HUDTime.fixedToCamera = true;
-        HUDTreasure = this.add.image(20, 60, 'treasInd');
-        HUDTreasure.fixedToCamera = true;
-        HUDFuel = this.add.sprite(120, 30, 'Fuel_Ind', 1);
-        HUDFuel.fixedToCamera = true;
         
         
         //Crystals
-        var xCryPositions = [];
-        var yCryPositions = [];
+        var xCryPositions = [732, 350, 540, 560, 100, 1070];
+        var yCryPositions = [415, 1170, 125, 975, 800, 340];
         
         crystals = this.game.add.group();
         crystals.enableBody = true;
@@ -137,8 +128,8 @@ gameObj.L2.prototype = {
 
         
         //Air Capsules
-        var xAirPositions = [];
-        var yAirPositions = [];
+        var xAirPositions = [200, 922];
+        var yAirPositions = [900, 125];
         airPacks = this.game.add.group();
         airPacks.enableBody = true;
         airPacks.physicsBodyType = Phaser.Physics.ARCADE;
@@ -182,6 +173,15 @@ gameObj.L2.prototype = {
             particle.animations.add('smoke', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 28);
         }, this);
 
+        
+        //HUD
+        HUDTime = this.add.image(20, 20, 'timeInd');
+        HUDTime.fixedToCamera = true;
+        HUDTreasure = this.add.image(20, 60, 'treasInd');
+        HUDTreasure.fixedToCamera = true;
+        HUDFuel = this.add.sprite(120, 30, 'Fuel_Ind', 1);
+        HUDFuel.fixedToCamera = true;
+        
         
         //Controls
         cursors = this.input.keyboard.createCursorKeys();
