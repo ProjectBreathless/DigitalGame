@@ -30,10 +30,12 @@ gameObj.MainMenu.prototype = {
     
 
 	startGame: function() {
-        music.stop();
+        
         var fadeOut = this.add.sprite(0, 0, 'BlackScreen');
         fadeOut.alpha = 0;
-        this.add.tween(fadeOut).to( { alpha: 1 }, 4000, "Linear", true);
+        this.add.tween(fadeOut).to({ alpha: 1 }, 4000, "Linear", true);
+        
+        music.stop();
 		this.game.state.start('L1');
 	}
 };

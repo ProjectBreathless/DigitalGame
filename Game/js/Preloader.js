@@ -28,7 +28,7 @@ gameObj.Preloader.prototype = {
         
         //Levels
         this.load.tilemap('l1map', 'levels/IntroduceAir.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('l2map', 'levels/IntroduceCrystals.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('l2map', 'levels/crystalintro.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l3map', 'levels/IntroduceRocket.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l4map', 'levels/CombineElements.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l5map', 'levels/BoostTiming.json', null, Phaser.Tilemap.TILED_JSON);

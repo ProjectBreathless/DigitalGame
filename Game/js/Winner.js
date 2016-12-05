@@ -126,10 +126,12 @@ gameObj.Winner.prototype = {
     },
 		
 	startGame: function() {
+		this.game.score = 0;
 		musicWin.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
+    	this.game.score = 0;
         musicWin.stop();
 		this.game.state.start('MainMenu');
 	}
