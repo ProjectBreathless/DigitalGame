@@ -124,7 +124,7 @@ gameObj.L6.prototype = {
         //Crystals
         //placement          jmp1 jmpup jmp2  jmp3  fall  1nook end
         var xCryPositions = [750, 1280, 1100, 1450, 938,  2000, 2350];//, 325, 350, 375];
-        var yCryPositions = [450,  200,  450,  450, 1400, 950,  800];//, 300, 225, 200];
+        var yCryPositions = [450,  200,  450,  450, 1200, 950,  800];//, 300, 225, 200];
         
         crystals = this.game.add.group();
         crystals.enableBody = true;
