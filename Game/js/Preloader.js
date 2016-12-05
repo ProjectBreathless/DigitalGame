@@ -28,7 +28,7 @@ gameObj.Preloader.prototype = {
         
         //Levels
         this.load.tilemap('l1map', 'levels/IntroduceAir.json', null, Phaser.Tilemap.TILED_JSON);
-        this.load.tilemap('l2map', 'levels/IntroduceCrystals.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('l2map', 'levels/crystalintro.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l3map', 'levels/IntroduceRocket.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l4map', 'levels/CombineElements.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('l5map', 'levels/BoostTiming.json', null, Phaser.Tilemap.TILED_JSON);
@@ -53,12 +53,12 @@ gameObj.Preloader.prototype = {
         this.load.audio('musicMainMenu', 'sound/Visager_-_15_-_Epilogue.mp3');
         this.load.audio('musicLoseScreen', 'sound/262353__stereo-surgeon__no-turning-back-synth-pad_edited.wav');
         this.load.audio('musicWinScreen', 'sound/RoccoW_-_01_-_Welcome.mp3');
-        this.load.audio('crystalFx', 'sound/Cut Audio Files/27568__suonho__memorymoon-space-blaster-plays_cut_cut.wav');
-        this.load.audio('aircapsuleFx', 'sound/Cut Audio Files/6110__twistedlemon__cola-bottle_cut_cut.wav');
-        this.load.audio('doorFx', 'sound/Cut Audio Files/123253__skullsmasha__mechanicalclamp_cut.wav');
+        this.load.audio('crystalFx', 'sound/27568__suonho__memorymoon-space-blaster-plays_cut_cut.wav');
+        this.load.audio('aircapsuleFx', 'sound/6110__twistedlemon__cola-bottle_cut_cut.wav');
+        this.load.audio('doorFx', 'sound/123253__skullsmasha__mechanicalclamp_cut.wav');
         this.load.audio('alarm', 'sound/39514__syna-max__alarm-of-d00m_silence.wav');
         this.load.audio('fuelpodFx', 'sound/30935__aust-paul__possiblelazer.wav');
-        this.load.audio('jetpackFx', 'sound/Cut Audio Files/36847__ecodtr__laserrocket2_cut_cut.wav');
+        this.load.audio('jetpackFx', 'sound/36847__ecodtr__laserrocket2_cut_cut.wav');
         
         //Fade Screen
         this.load.image('BlackScreen', 'imgs/BlackScreen.png');

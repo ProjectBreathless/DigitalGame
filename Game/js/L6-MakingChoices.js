@@ -37,6 +37,10 @@ gameObj.L6 = function (game) {
     var music;
     var alarm;
 
+    var prevX;
+    var prevY;
+    var tilesprite;
+
 };
 
 gameObj.L6.prototype = {
@@ -51,6 +55,12 @@ gameObj.L6.prototype = {
         this.physics.arcade.setBoundsToWorld();
 
         this.stage.backgroundColor = '#2d2d2d';
+
+        star_tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'starField');
+        star_tilesprite.fixedToCamera = true;
+
+        tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'spaceShip');
+        tilesprite.fixedToCamera = true;
 
         map = this.add.tilemap('l6map');
 
@@ -114,7 +124,7 @@ gameObj.L6.prototype = {
         //Crystals
         //placement          jmp1 jmpup jmp2  jmp3  fall  1nook end
         var xCryPositions = [750, 1280, 1100, 1450, 938,  2000, 2350];//, 325, 350, 375];
-        var yCryPositions = [450,  200,  450,  450, 1400, 950,  800];//, 300, 225, 200];
+        var yCryPositions = [450,  200,  450,  450, 1200, 950,  800];//, 300, 225, 200];
         
         crystals = this.game.add.group();
         crystals.enableBody = true;
@@ -225,6 +235,9 @@ gameObj.L6.prototype = {
         var tweenIn = this.add.tween(fadeIn).to( { alpha: 0 }, 500, "Linear", true);
         
         timer.start();
+
+        prevX = this.camera.x;
+        prevY = this.camera.y;
         
         
     },    
@@ -240,6 +253,17 @@ gameObj.L6.prototype = {
         this.game.physics.arcade.collide(airPacks, layer);
         this.game.physics.arcade.collide(emitter, layer);
 
+        star_tilesprite.tilePosition.x -=2;
+        star_tilesprite.tilePosition.y -=0.5;
+
+        if(player.body.x != prevX){
+            tilesprite.tilePosition.x += (this.camera.x - prevX)*-0.5;
+        }
+
+        
+        if(player.body.y != prevY){
+            tilesprite.tilePosition.y += (this.camera.y - prevY)*-0.5;
+        }
 
         //Rocket Jump
         if ((player.body.rocketJump || rocketReady) && !holdRocket && !player.body.onFloor() && (cursors.up.isDown || cursors.right.isDown || cursors.down.isDown || cursors.left.isDown)) {
@@ -419,7 +443,8 @@ gameObj.L6.prototype = {
         this.physics.arcade.overlap(player, fuelPacks, this.collectFuel, null, this);
         this.physics.arcade.overlap(player, door, this.Win, null, this);
 
-
+        prevX = this.camera.x;
+        prevY = this.camera.y;
 
     },
     jumpDirection: function (player, radian) {

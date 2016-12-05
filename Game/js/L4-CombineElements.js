@@ -36,6 +36,10 @@ gameObj.L4 = function (game) {
     var music;
     var alarm;
 
+    var prevX;
+    var prevY;
+    var tilesprite;
+
 };
 
 gameObj.L4.prototype = {
@@ -50,6 +54,12 @@ gameObj.L4.prototype = {
         this.physics.arcade.setBoundsToWorld();
 
         this.stage.backgroundColor = '#2d2d2d';
+
+        star_tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'starField');
+        star_tilesprite.fixedToCamera = true;
+
+        tilesprite = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'spaceShip');
+        tilesprite.fixedToCamera = true;
 
         map = this.add.tilemap('l4map');
 
@@ -222,6 +232,9 @@ gameObj.L4.prototype = {
         // Start the timer
         timer.start();
 
+        prevX = this.camera.x;
+        prevY = this.camera.y;
+
     },
 
     update: function () {
@@ -232,6 +245,18 @@ gameObj.L4.prototype = {
         this.game.physics.arcade.collide(fuelPacks, layer);
         this.game.physics.arcade.collide(airPacks, layer);
         this.game.physics.arcade.collide(emitter, layer);
+
+        star_tilesprite.tilePosition.x -=2;
+        star_tilesprite.tilePosition.y -=0.5;
+
+        if(player.body.x != prevX){
+            tilesprite.tilePosition.x += (this.camera.x - prevX)*-0.5;
+        }
+
+        
+        if(player.body.y != prevY){
+            tilesprite.tilePosition.y += (this.camera.y - prevY)*-0.5;
+        }
 
 
         //Rocket Jump
@@ -412,6 +437,8 @@ gameObj.L4.prototype = {
         this.physics.arcade.overlap(player, fuelPacks, this.collectFuel, null, this);
         this.physics.arcade.overlap(player, door, this.Win, null, this);
 
+        prevX = this.camera.x;
+        prevY = this.camera.y;
 
 
     },

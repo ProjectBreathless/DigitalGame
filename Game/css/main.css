@@ -84,10 +84,11 @@ body {
 .nav-head-sub {
   padding: 50px 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 .nav-head-sub_item {
   padding: 30px 30px 10px;
+  margin:0 5vw;
   font-family: monospace;
   font-size: 2em;
   font-weight: 700;
