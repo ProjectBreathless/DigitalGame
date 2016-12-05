@@ -57,10 +57,12 @@ gameObj.Loser.prototype = {
 		
 	},
 	startGame: function() {
+		this.game.score = 0;
 		musicLose.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
+    	this.game.score = 0;
     	musicLose.stop();
 		this.game.state.start('MainMenu');
 	}
