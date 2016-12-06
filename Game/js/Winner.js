@@ -127,11 +127,13 @@ gameObj.Winner.prototype = {
 		
 	startGame: function() {
 		this.game.score = 0;
+        this.game.timeLeft = 5;
 		musicWin.stop();
 		this.game.state.start('L1');
 	},
     mainScreen: function() {
     	this.game.score = 0;
+        this.game.timeLeft = 5;
         musicWin.stop();
 		this.game.state.start('MainMenu');
 	}
